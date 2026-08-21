@@ -93,6 +93,19 @@ h2{font-size:27px;font-weight:900;margin:16px 0 12px}
 .reasons li{font-size:12.5px;color:var(--ink2);list-style:none;padding-left:15px;position:relative;margin-top:4px}
 .reasons li::before{content:"";position:absolute;left:1px;top:9px;width:6px;height:6px;border-radius:2px;background:var(--accent)}
 
+/* ---------- 経緯（会話） ---------- */
+.chat{max-width:640px;margin:26px auto 0}
+.msg{display:flex;gap:10px;margin-top:14px}
+.msg .av{width:38px;height:38px;border-radius:50%;flex-shrink:0;display:grid;place-items:center;
+  font-size:11.5px;font-weight:900;color:#fff;background:#A08A6C}
+.msg.k .av{background:#5B8DB8}
+.msg .bub{background:#fff;border-radius:4px 16px 16px 16px;padding:11px 15px;font-size:14px;color:var(--ink2)}
+.msg.me{flex-direction:row-reverse}
+.msg.me .av{background:var(--accent)}
+.msg.me .bub{background:var(--accent-l);border-radius:16px 4px 16px 16px;color:var(--ink)}
+.chat .divider{text-align:center;font-size:12.5px;color:var(--ink3);margin:24px 0 8px;font-weight:700}
+.chat-note{text-align:center;font-size:12.5px;color:var(--ink3);margin-top:18px}
+
 /* ---------- zigzag ---------- */
 .zig{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:start}
 .zig .txt .n{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:11px;background:var(--accent);color:#fff;font-weight:900;font-size:15px;margin-bottom:12px}
@@ -248,8 +261,24 @@ html,body{max-width:100%;overflow-x:clip}
   </div>
 </div></section>
 
-<!-- ============ 2 対応員（zigzag: 左テキスト・右実働） ============ -->
+<!-- ============ 経緯（会話の再現） ============ -->
 <section class="band"><div class="wrap">
+  <div style="text-align:center">
+    <span class="eyebrow">経緯</span>
+    <h2>このページができた経緯</h2>
+  </div>
+  <div class="chat">
+    <div class="msg"><div class="av">仲間</div><div class="bub">港区が民泊・旅館業の規制強化についてパブコメを募集してる。設問が賛否形式だから、規制強化ありきになりそう。</div></div>
+    <div class="msg k"><div class="av">仲間</div><div class="bub">この聞き方だと、関係ない住民はネガティブ回答になる。なんで規制を強める方向にしか動けないんだろう。</div></div>
+    <div class="msg"><div class="av">仲間</div><div class="bub">実際に運営している事業者が話し合いの輪にいないから。クレームはAIに纏めて投げて、具体的に動いた方が解決が早い。現地にお金が落ちて、住民に仕事が回るといい。</div></div>
+    <div class="divider">── その翌日、この提案を形にしたのがこのページ ──</div>
+    <div class="msg me"><div class="av">答え</div><div class="bub"><b>近所ホットライン。</b>苦情を24時間受けて、近くの住民が現場に行って、記録が施設ごとに残る。規制の代わりに、問題のある施設だけを数字で特定する仕組み。上のスマホから1件流すと、下の画面に流れていく。</div></div>
+  </div>
+  <p class="chat-note">2026年8月20日、区内で民泊を運営する仲間とのやりとりの要約。</p>
+</div></section>
+
+<!-- ============ 2 対応員（zigzag: 左テキスト・右実働） ============ -->
+<section><div class="wrap">
   <div class="zig">
     <div class="txt">
       <span class="n">2</span>
@@ -275,7 +304,7 @@ html,body{max-width:100%;overflow-x:clip}
 </div></section>
 
 <!-- ============ 3 台帳（zigzag rev: 左実働・右テキスト） ============ -->
-<section id="taicho"><div class="wrap">
+<section id="taicho" class="band"><div class="wrap">
   <div class="zig">
     <div class="vis">
       <div class="ledger-head">
@@ -308,7 +337,7 @@ html,body{max-width:100%;overflow-x:clip}
 </div></section>
 
 <!-- ============ 比較シミュレータ ============ -->
-<section class="band"><div class="wrap">
+<section><div class="wrap">
   <span class="eyebrow">比較</span>
   <h2><span class="ph">一律規制と</span><span class="ph">記録運用の比較</span></h2>
   <p class="lead">区内の施設数と苦情の割合を動かして比べる。数字は下記の仮定に基づく試算で、実測値ではない。</p>
@@ -348,7 +377,7 @@ html,body{max-width:100%;overflow-x:clip}
 </div></section>
 
 <!-- ============ 対案文 ============ -->
-<section id="doc"><div class="wrap">
+<section id="doc" class="band"><div class="wrap">
   <span class="eyebrow">提出用文面</span>
   <h2><span class="ph">パブリックコメント</span><span class="ph">提出用の対案文</span></h2>
   <p class="lead">「規制強化に反対」だけでは意見として弱い。代わりに何をするかまで書いた案。コピーして自分の言葉に直して提出できる。</p>
