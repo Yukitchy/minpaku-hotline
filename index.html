@@ -170,6 +170,9 @@ input[type=range]{width:100%;accent-color:var(--accent)}
 .next-card p{font-size:13.5px;color:#CBB9A2;margin-top:8px}
 footer{padding:38px 0 56px;text-align:center;font-size:13px;color:var(--ink3)}
 
+/* gridアイテムが中身（テーブル等）より縮めない事故の防止 */
+.hero-grid>*,.zig>*,.sim>*,.sim-out>*{min-width:0}
+html,body{max-width:100%;overflow-x:clip}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 @media(max-width:860px){
