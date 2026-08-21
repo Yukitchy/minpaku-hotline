@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>近所ホットライン｜民泊の苦情を記録に変える仕組み</title>
+<title>UI 5案切替｜近所ホットライン</title>
 <meta name="description" content="民泊・旅館業への苦情を24時間受け付け、近所に住む対応員が現場に向かい、対応記録を施設単位で残す仕組み。規制の一律強化ではなく、問題のある施設だけを数字で特定するための対案。">
 <meta property="og:title" content="近所ホットライン（プロトタイプ）">
 <meta property="og:description" content="苦情を24時間受けて、近所の住民が現場に行って、記録が施設ごとに残る。規制強化パブコメへの対案。この場で動かせるプロトタイプ入り。">
@@ -232,6 +232,62 @@ footer{padding:40px 0 60px; text-align:center; font-size:13px; color:var(--ink3)
   .ledger-head{grid-template-columns:1fr 1fr}
   .hero-meta{gap:18px}
 }
+
+/* ===== テーマ切替（5案・共通の引き算） ===== */
+body[data-theme] .issue, body[data-theme] .step, body[data-theme] .side,
+body[data-theme] .who-card, body[data-theme] .plan, body[data-theme] .sim-ctrl,
+body[data-theme] .stat, body[data-theme] .doc, body[data-theme] .phone,
+body[data-theme] .quote, body[data-theme] .ticket, body[data-theme] .sbox{
+  border:none; box-shadow:none;
+}
+body[data-theme] .plan.win{box-shadow:none; outline:3px solid var(--navy)}
+body[data-theme] table{border:none}
+body[data-theme] section{position:relative; overflow:hidden}
+body[data-theme] .wrap{position:relative; z-index:1}
+body[data-theme] section::before{content:""; position:absolute; pointer-events:none; z-index:0}
+body[data-theme] section:nth-of-type(4n+1)::before{top:-40px;right:-60px;width:220px;height:220px;background:var(--deco);border-radius:0 0 0 100%}
+body[data-theme] section:nth-of-type(4n+2)::before{bottom:24px;right:-10px;width:180px;height:140px;background-image:radial-gradient(var(--deco) 2px,transparent 2px);background-size:18px 18px}
+body[data-theme] section:nth-of-type(4n+3)::before{top:60px;right:-70px;width:200px;height:200px;border-radius:50%;border:14px solid var(--deco)}
+body[data-theme] section:nth-of-type(4n+4)::before{top:40px;right:-40px;width:150px;height:26px;border-radius:999px;background:var(--deco);box-shadow:0 52px 0 -4px var(--deco),0 104px 0 8px var(--deco)}
+body[data-theme] .hero{background:var(--hero-bg, var(--bg))}
+body[data-theme] .proto-sec{background:var(--proto-bg, var(--bg))}
+body[data-theme] .tabs{background:var(--tabs-bg, #fff)}
+
+/* A: 青空 — 現行の官公庁ネイビーを空色に寄せて軽くする */
+body[data-theme=a]{--navy:#2779C4; --navy-l:#DCEAF7; --bg:#EEF3F8; --hero-bg:#E4EDF6;
+  --proto-bg:#E4EBF2; --tabs-bg:#D8E2EC; --line:#D9E2EA; --line2:#E4EAF0; --r:18px;
+  --deco:rgba(39,121,196,.07)}
+/* B: ひだまり — 暖色オレンジ。いちばん「やわらかい」 */
+body[data-theme=b]{--navy:#D9730D; --navy-l:#FAEBD9; --bg:#F5F1EB; --hero-bg:#F2ECE3;
+  --proto-bg:#EFE9E0; --tabs-bg:#E6DED2; --ink:#3A2E20; --ink2:#5C4E3C; --ink3:#8A7A64;
+  --line:#E5DDD0; --line2:#EDE6DB; --r:22px; --deco:rgba(217,115,13,.08)}
+/* C: 商店街 — 緑。地域・掲示板の空気 */
+body[data-theme=c]{--navy:#1F8A5D; --navy-l:#DFF2E8; --bg:#EFF3EF; --hero-bg:#E7EFE8;
+  --proto-bg:#E5EDE6; --tabs-bg:#D8E5DA; --ink:#1E2D24; --ink2:#44554A; --ink3:#6E7F73;
+  --line:#DCE5DD; --line2:#E6EDE7; --r:16px; --deco:rgba(31,138,93,.08)}
+/* D: コーラルポップ — 角丸大きめ・元気 */
+body[data-theme=d]{--navy:#E14B63; --navy-l:#FBE2E6; --bg:#F6F1F1; --hero-bg:#F4EBEB;
+  --proto-bg:#F1E9E9; --tabs-bg:#EADCDC; --ink:#33222A; --ink2:#5C4650; --ink3:#8A6F79;
+  --line:#EBDDE0; --line2:#F1E7E9; --r:26px; --amber:#D9910D; --deco:rgba(225,75,99,.07)}
+body[data-theme=d] .btn, body[data-theme=d] .btn-full, body[data-theme=d] .tab{font-weight:900}
+/* E: 紙面 — 囲みなし・下線と余白だけで区切る新聞スタイル */
+body[data-theme=e]{--navy:#1B3A6B; --navy-l:#E7ECF3; --bg:#F7F6F3; --hero-bg:#F7F6F3;
+  --proto-bg:#F0EFEA; --tabs-bg:#E5E3DC; --line:#D8D5CC; --line2:#E6E4DD; --r:4px;
+  --deco:rgba(27,58,107,.05)}
+body[data-theme=e] .issue, body[data-theme=e] .step, body[data-theme=e] .who-card{
+  background:transparent; border-radius:0; padding:18px 0; border-top:2px solid var(--ink)}
+body[data-theme=e] .issue .n{border-radius:0}
+body[data-theme=e] .btn{border-radius:6px}
+body[data-theme=e] .btn-full{border-radius:6px}
+body[data-theme=e] .tabs, body[data-theme=e] .tab{border-radius:6px}
+body[data-theme=e] section::before{display:none}
+
+/* 切替バー */
+#theme-bar{position:fixed; left:14px; bottom:14px; z-index:9999; display:flex; gap:6px;
+  background:#141A22; padding:8px; border-radius:99px}
+#theme-bar button{color:#fff; font-size:13px; font-weight:700; padding:8px 14px; border-radius:99px}
+#theme-bar button.on{background:#fff; color:#141A22}
+
 </style>
 </head>
 <body>
@@ -854,6 +910,16 @@ if (location.search.includes('test=1')){
   document.body.appendChild(bar);
 }
 </script>
+
+<script>
+const bar=document.createElement('div'); bar.id='theme-bar';
+const THEMES=[['a','A 青空'],['b','B ひだまり'],['c','C 商店街'],['d','D ポップ'],['e','E 紙面']];
+THEMES.forEach(([k,label])=>{const b=document.createElement('button'); b.textContent=label;
+  b.onclick=()=>{document.body.dataset.theme=k; [...bar.children].forEach(x=>x.classList.remove('on')); b.classList.add('on');};
+  bar.appendChild(b);});
+document.body.appendChild(bar); bar.children[0].click();
+</script>
+
 <script src="devbar.js"></script>
 </body>
 </html>
