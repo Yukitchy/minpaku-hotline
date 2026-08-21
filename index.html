@@ -15,512 +15,338 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#141A22; --ink2:#3D4756; --ink3:#6B7787;
-  --line:#E2E5EA; --line2:#EFF1F4;
-  --bg:#FAFAF8; --card:#FFFFFF;
-  --navy:#1B3A6B; --navy-l:#EDF2FA;
-  --amber:#C97A12; --amber-l:#FDF3E3;
+  --accent:#D9730D; --accent-d:#B85E06; --accent-l:#FAEBD9;
+  --ink:#3A2E20; --ink2:#5C4E3C; --ink3:#8A7A64;
+  --bg:#F5F1EB; --bg2:#EFE9E0; --card:#FFFFFF;
+  --line:#E5DDD0; --line2:#EDE6DB;
   --green:#0F7A55; --green-l:#E9F6F0;
   --red:#C43A28; --red-l:#FCEDEA;
-  --r:14px;
-  --shadow:0 1px 2px rgba(20,26,34,.05), 0 8px 24px -12px rgba(20,26,34,.14);
+  --amber:#B8860B; --amber-l:#FAF0D7;
+  --deco:rgba(217,115,13,.07);
+  --r:20px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{
   font-family:"Noto Sans JP",system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif;
-  background:var(--bg); color:var(--ink);
-  line-height:1.85; font-size:16px;
-  -webkit-font-smoothing:antialiased;
-  word-break:normal; overflow-wrap:normal; line-break:strict;
+  background:var(--bg); color:var(--ink); line-height:1.85; font-size:15.5px;
+  -webkit-font-smoothing:antialiased; word-break:auto-phrase; line-break:strict;
 }
-img{max-width:100%}
-button{font-family:inherit; cursor:pointer; border:none; background:none; color:inherit}
-input,textarea,select{font-family:inherit; font-size:15px; color:inherit}
-a{color:var(--navy)}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input,textarea,select{font-family:inherit;font-size:15px;color:inherit}
+a{color:var(--accent-d)}
+h1,h2,h3{line-height:1.5;text-wrap:balance}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
 
-.wrap{max-width:1060px; margin:0 auto; padding:0 24px}
-.narrow{max-width:780px; margin:0 auto; padding:0 24px}
+section{position:relative;overflow:hidden;padding:80px 0}
+section:nth-of-type(4n+1)::before{content:"";position:absolute;pointer-events:none;top:-40px;right:-60px;width:220px;height:220px;background:var(--deco);border-radius:0 0 0 100%}
+section:nth-of-type(4n+2)::before{content:"";position:absolute;pointer-events:none;bottom:24px;right:-10px;width:180px;height:140px;background-image:radial-gradient(var(--deco) 2px,transparent 2px);background-size:18px 18px}
+section:nth-of-type(4n+3)::before{content:"";position:absolute;pointer-events:none;top:60px;right:-70px;width:200px;height:200px;border-radius:50%;border:14px solid var(--deco)}
+section:nth-of-type(4n+4)::before{content:"";position:absolute;pointer-events:none;top:40px;right:-40px;width:150px;height:26px;border-radius:999px;background:var(--deco);box-shadow:0 52px 0 -4px var(--deco),0 104px 0 8px var(--deco)}
+.band{background:var(--bg2)}
 
-section{padding:88px 0}
-section + section{border-top:1px solid var(--line2)}
-.eyebrow{
-  font-size:12px; font-weight:700; letter-spacing:.14em;
-  color:var(--navy); background:var(--navy-l);
-  display:inline-block; padding:6px 12px; border-radius:99px; line-height:1.4;
-}
-h2{font-size:30px; font-weight:900; line-height:1.5; letter-spacing:.01em; margin:18px 0 14px}
-h3{font-size:18px; font-weight:700; line-height:1.6}
-.lead{color:var(--ink2); font-size:16px; max-width:46em}
+.eyebrow{display:inline-block;font-size:12.5px;font-weight:700;letter-spacing:.12em;
+  color:var(--accent-d);background:var(--accent-l);padding:6px 13px;border-radius:99px;line-height:1.5}
+h2{font-size:27px;font-weight:900;margin:16px 0 12px}
+.lead{color:var(--ink2);max-width:46em}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;font-weight:700;
+  padding:14px 26px;border-radius:99px;text-decoration:none;font-size:15px;
+  transition:transform .12s cubic-bezier(.34,1.56,.64,1)}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:scale(.98)}
+.btn.ghost{background:#fff;color:var(--accent-d)}
+.card{background:var(--card);border-radius:var(--r);padding:24px}
 
 /* ---------- hero ---------- */
-.hero{
-  padding:64px 0 76px;
-  background:
-    radial-gradient(1100px 420px at 78% -10%, #E9F0FB 0%, rgba(233,240,251,0) 62%),
-    linear-gradient(180deg,#FFFFFF 0%, var(--bg) 100%);
-  border-bottom:1px solid var(--line2);
-}
-.hero h1{
-  font-size:clamp(26px,3.6vw,40px); font-weight:900; line-height:1.48;
-  letter-spacing:.005em; margin:20px 0 0; max-width:19em;
-}
-.hero h1 em{font-style:normal; color:var(--navy)}
-.hero .sub{margin-top:8px; font-size:14px; font-weight:700; color:var(--ink3); letter-spacing:.06em}
-.hero .lead{margin-top:22px; font-size:17px}
-.cta-row{display:flex; gap:12px; flex-wrap:wrap; margin-top:30px}
-.btn{
-  display:inline-flex; align-items:center; gap:8px;
-  padding:14px 24px; border-radius:99px; font-weight:700; font-size:15px;
-  text-decoration:none; transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
-}
-.btn-primary{background:var(--navy); color:#fff; box-shadow:0 6px 18px -6px rgba(27,58,107,.55)}
-.btn-primary:hover{transform:translateY(-1px); box-shadow:0 10px 24px -8px rgba(27,58,107,.6)}
-.btn-ghost{background:#fff; color:var(--navy); border:1px solid var(--line)}
-.btn-ghost:hover{background:var(--navy-l)}
-.hero-meta{display:flex; gap:26px; flex-wrap:wrap; margin-top:34px; padding-top:24px; border-top:1px solid var(--line)}
-.hero-meta div{font-size:13px; color:var(--ink3)}
-.hero-meta b{display:block; font-size:22px; font-weight:900; color:var(--ink); line-height:1.4}
+.hero{padding:64px 0 70px}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:36px;align-items:start}
+.hero h1{font-size:clamp(24px,3.2vw,34px);font-weight:900;margin-top:18px}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero .sub{margin-top:6px;font-size:13.5px;font-weight:700;color:var(--ink3)}
+.hero .lead{margin-top:16px}
+.cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
+.hero-meta{display:flex;gap:24px;flex-wrap:wrap;margin-top:30px;padding-top:22px;border-top:1px solid var(--line)}
+.hero-meta div{font-size:13px;color:var(--ink3)}
+.hero-meta b{display:block;font-size:21px;font-weight:900;color:var(--ink)}
 
-/* ---------- 課題 ---------- */
-.issues{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:34px}
-.issue{background:var(--card); border:1px solid var(--line); border-radius:var(--r); padding:24px}
-.issue .n{
-  width:30px;height:30px;border-radius:8px;background:var(--red-l);color:var(--red);
-  display:grid;place-items:center;font-weight:900;font-size:14px;margin-bottom:14px
-}
-.issue p{font-size:14.5px; color:var(--ink2); margin-top:8px}
-.quote{
-  margin-top:34px; background:var(--card); border:1px solid var(--line);
-  border-left:4px solid var(--navy); border-radius:var(--r); padding:22px 24px;
-}
-.quote p{font-size:15.5px; color:var(--ink); font-weight:500}
-.quote cite{display:block; margin-top:10px; font-size:13px; color:var(--ink3); font-style:normal}
+/* ---------- スマホ（実働） ---------- */
+.phone{width:320px;background:#2A2118;border-radius:38px;padding:9px;margin:0 auto}
+.phone .scr{background:#fff;border-radius:30px;overflow:hidden}
+.phone-bar{background:var(--accent);color:#fff;padding:13px 17px;font-size:13px;font-weight:700;display:flex;justify-content:space-between}
+.phone-bd{padding:16px 16px 20px}
+.field{margin-top:13px}
+.field:first-child{margin-top:0}
+.field label{display:block;font-size:12.5px;font-weight:700;color:var(--ink2);margin-bottom:5px}
+.field textarea,.field select{width:100%;border:1.5px solid var(--line);border-radius:11px;padding:10px 11px;background:#fff;resize:vertical;font-size:13.5px}
+.field textarea:focus,.field select:focus{outline:2px solid #F0CFA6;border-color:var(--accent)}
+.chips{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}
+.chip{font-size:12.5px;padding:5px 10px;border-radius:99px;background:var(--line2);color:var(--ink2)}
+.chip:hover{background:var(--accent-l);color:var(--accent-d)}
+.btn-full{display:block;width:100%;text-align:center;background:var(--accent);color:#fff;padding:13px;border-radius:12px;font-weight:700;font-size:14.5px;margin-top:14px}
+.btn-full:active{transform:scale(.98)}
+.reply{background:var(--green-l);border-radius:12px;padding:12px 14px;margin-top:12px}
+.reply .t{font-size:12px;font-weight:700;color:var(--green);letter-spacing:.05em}
+.reply p{font-size:13px;margin-top:5px;color:#12503A}
+.reasons{background:var(--bg);border-radius:12px;padding:12px 14px;margin-top:10px}
+.reasons .t{font-size:12px;font-weight:700;color:var(--ink3)}
+.reasons li{font-size:12.5px;color:var(--ink2);list-style:none;padding-left:15px;position:relative;margin-top:4px}
+.reasons li::before{content:"";position:absolute;left:1px;top:9px;width:6px;height:6px;border-radius:2px;background:var(--accent)}
 
-/* ---------- 3ステップ ---------- */
-.steps{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:34px}
-.step{background:var(--card); border:1px solid var(--line); border-radius:var(--r); padding:26px; position:relative; overflow:hidden}
-.step .tag{font-size:11px;font-weight:700;letter-spacing:.1em;color:#fff;background:var(--navy);padding:4px 10px;border-radius:99px}
-.step h3{margin:14px 0 8px; font-size:19px}
-.step p{font-size:14.5px; color:var(--ink2)}
-.step ul{margin-top:14px; padding-left:0; list-style:none}
-.step li{font-size:13.5px; color:var(--ink2); padding-left:18px; position:relative; margin-top:6px}
-.step li::before{content:""; position:absolute; left:2px; top:11px; width:6px; height:6px; border-radius:2px; background:var(--navy)}
+/* ---------- zigzag ---------- */
+.zig{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:start}
+.zig .txt .n{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:11px;background:var(--accent);color:#fff;font-weight:900;font-size:15px;margin-bottom:12px}
+.zig h3{font-size:20px;font-weight:900}
+.zig .txt p{margin-top:10px;color:var(--ink2);font-size:14.5px}
+.zig .txt ul{margin-top:12px;list-style:none}
+.zig .txt li{font-size:13.5px;color:var(--ink2);padding-left:18px;position:relative;margin-top:6px}
+.zig .txt li::before{content:"";position:absolute;left:2px;top:11px;width:6px;height:6px;border-radius:2px;background:var(--accent)}
 
-/* ---------- プロト ---------- */
-.proto-sec{background:#F2F4F7}
-.tabs{display:flex; gap:6px; background:#E5E9EF; padding:6px; border-radius:99px; margin:30px auto 0; width:max-content; max-width:100%; flex-wrap:wrap; justify-content:center}
-.tab{padding:10px 20px; border-radius:99px; font-size:14px; font-weight:700; color:var(--ink2); white-space:nowrap}
-.tab.on{background:#fff; color:var(--navy); box-shadow:var(--shadow)}
-.panel{display:none; margin-top:26px}
-.panel.on{display:block}
-.screen-grid{display:grid; grid-template-columns:340px 1fr; gap:24px; align-items:start}
-.phone{
-  background:#fff; border-radius:26px; border:1px solid var(--line);
-  box-shadow:var(--shadow); overflow:hidden;
-}
-.phone-bar{background:var(--navy); color:#fff; padding:14px 18px; font-size:13px; font-weight:700; display:flex; justify-content:space-between; align-items:center}
-.phone-body{padding:20px 18px 24px}
-.field{margin-top:16px}
-.field label{display:block; font-size:12.5px; font-weight:700; color:var(--ink2); margin-bottom:6px}
-.field textarea, .field input, .field select{
-  width:100%; border:1px solid var(--line); border-radius:10px; padding:11px 12px; background:#fff; resize:vertical;
-}
-.field textarea:focus,.field input:focus,.field select:focus{outline:2px solid #C9D8F2; outline-offset:0; border-color:var(--navy)}
-.chips{display:flex; gap:6px; flex-wrap:wrap; margin-top:8px}
-.chip{font-size:12px; padding:6px 11px; border-radius:99px; background:var(--line2); color:var(--ink2); font-weight:500}
-.chip:hover{background:var(--navy-l); color:var(--navy)}
-.btn-full{display:block; width:100%; text-align:center; background:var(--navy); color:#fff; padding:14px; border-radius:12px; font-weight:700; font-size:15px; margin-top:18px}
-.btn-full:disabled{background:#B8C0CC; cursor:not-allowed}
-.side{background:#fff; border:1px solid var(--line); border-radius:var(--r); padding:24px; box-shadow:var(--shadow)}
-.side h3{margin-bottom:4px}
-.side .hint{font-size:13px; color:var(--ink3); margin-bottom:18px}
+.ticket{background:#fff;border-radius:14px;padding:15px;margin-top:10px}
+.ticket:first-child{margin-top:0}
+.ticket-top{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.badge{font-size:12px;font-weight:700;padding:4px 10px;border-radius:99px;white-space:nowrap}
+.b-high{background:var(--red-l);color:var(--red)}
+.b-mid{background:var(--amber-l);color:var(--amber)}
+.b-low{background:var(--accent-l);color:var(--accent-d)}
+.b-done{background:var(--green-l);color:var(--green)}
+.ticket .id{font-size:12.5px;color:var(--ink3);font-weight:700}
+.ticket .txt2{font-size:13.5px;margin-top:8px}
+.ticket .meta{font-size:12.5px;color:var(--ink3);margin-top:8px;display:flex;gap:12px;flex-wrap:wrap}
+.timer{font-variant-numeric:tabular-nums;font-weight:900;color:var(--accent-d)}
+.empty{border:2px dashed var(--line);border-radius:14px;padding:30px 18px;text-align:center;color:var(--ink3);font-size:13.5px;background:transparent}
+.resp-actions{display:flex;gap:7px;margin-top:12px;flex-wrap:wrap}
+.mini{padding:8px 14px;border-radius:10px;font-size:13px;font-weight:700;background:var(--bg);color:var(--ink2)}
+.mini:hover{background:var(--accent-l);color:var(--accent-d)}
+.mini.go{background:var(--accent);color:#fff}
+.wallet{display:flex;justify-content:space-between;align-items:center;background:var(--accent-l);border-radius:12px;padding:13px 17px;margin-top:12px}
+.wallet span{font-size:13px;color:var(--accent-d);font-weight:700}
+.wallet b{font-size:22px;font-weight:900;color:var(--accent-d);font-variant-numeric:tabular-nums}
+.vis-box{background:var(--bg2);border-radius:var(--r);padding:20px}
+.band .vis-box{background:var(--bg)}
 
-.ticket{border:1px solid var(--line); border-radius:12px; padding:16px; margin-top:12px; background:#fff}
-.ticket-top{display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap}
-.badge{font-size:11.5px; font-weight:700; padding:4px 10px; border-radius:99px; white-space:nowrap}
-.b-high{background:var(--red-l); color:var(--red)}
-.b-mid{background:var(--amber-l); color:var(--amber)}
-.b-low{background:var(--navy-l); color:var(--navy)}
-.b-done{background:var(--green-l); color:var(--green)}
-.ticket .id{font-size:12px; color:var(--ink3); font-weight:700; letter-spacing:.04em}
-.ticket .txt{font-size:14px; color:var(--ink); margin-top:10px}
-.ticket .meta{font-size:12.5px; color:var(--ink3); margin-top:10px; display:flex; gap:14px; flex-wrap:wrap}
-.timer{font-variant-numeric:tabular-nums; font-weight:900; color:var(--navy)}
-.empty{border:1px dashed var(--line); border-radius:12px; padding:34px 20px; text-align:center; color:var(--ink3); font-size:14px}
-
-.reply{background:var(--green-l); border:1px solid #CBE6DA; border-radius:12px; padding:16px; margin-top:16px}
-.reply .t{font-size:12px; font-weight:700; color:var(--green); letter-spacing:.06em}
-.reply p{font-size:14px; margin-top:8px; color:#12503A}
-
-.resp-actions{display:flex; gap:8px; margin-top:14px; flex-wrap:wrap}
-.mini{padding:9px 15px; border-radius:9px; font-size:13px; font-weight:700; border:1px solid var(--line); background:#fff; color:var(--ink2)}
-.mini:hover{border-color:var(--navy); color:var(--navy)}
-.mini.go{background:var(--navy); color:#fff; border-color:var(--navy)}
-.mini.go:hover{background:#16305A; color:#fff}
-.wallet{display:flex; justify-content:space-between; align-items:center; background:var(--navy-l); border-radius:12px; padding:14px 18px; margin-top:16px}
-.wallet span{font-size:13px; color:var(--navy); font-weight:700}
-.wallet b{font-size:24px; font-weight:900; color:var(--navy); font-variant-numeric:tabular-nums}
-
-.plain-list{list-style:none; margin-top:6px}
-.plain-list li{font-size:14px; color:var(--ink2); padding-left:20px; position:relative; margin-top:10px}
-.plain-list li::before{content:""; position:absolute; left:2px; top:11px; width:7px; height:7px; border-radius:50%; background:var(--navy)}
-
-/* 台帳 */
-.ledger-head{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:20px}
-.stat{background:#fff; border:1px solid var(--line); border-radius:12px; padding:18px}
-.stat span{font-size:12px; color:var(--ink3); font-weight:700}
-.stat b{display:block; font-size:26px; font-weight:900; margin-top:4px; font-variant-numeric:tabular-nums}
-table{width:100%; border-collapse:collapse; background:#fff; border:1px solid var(--line); border-radius:12px; overflow:hidden}
-th,td{padding:13px 14px; text-align:left; font-size:13.5px; border-bottom:1px solid var(--line2)}
-th{background:#F7F8FA; font-size:12px; font-weight:700; color:var(--ink3); letter-spacing:.04em; white-space:nowrap}
+/* ---------- 台帳 ---------- */
+.ledger-head{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+.stat{background:#fff;border-radius:14px;padding:14px 16px}
+.stat span{font-size:12px;color:var(--ink3);font-weight:700}
+.stat b{display:block;font-size:23px;font-weight:900;margin-top:2px;font-variant-numeric:tabular-nums}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:14px;overflow:hidden}
+th,td{padding:11px 12px;text-align:left;font-size:13px;border-bottom:1px solid var(--line2)}
+th{background:#F8F4EE;font-size:12px;font-weight:700;color:var(--ink3);white-space:nowrap}
 tr:last-child td{border-bottom:none}
-td.num{font-variant-numeric:tabular-nums; font-weight:700}
+td.num{font-variant-numeric:tabular-nums;font-weight:700}
 tr.flag td{background:var(--red-l)}
-tr.flag .badge{background:#fff; color:var(--red); box-shadow:inset 0 0 0 1px rgba(196,58,40,.35)}
-.table-scroll{overflow-x:auto; border-radius:12px}
-.note{font-size:12.5px; color:var(--ink3); margin-top:14px}
+tr.flag .badge{background:#fff;color:var(--red);box-shadow:inset 0 0 0 1px rgba(196,58,40,.35)}
+.table-scroll{overflow-x:auto;border-radius:14px}
+.note{font-size:13px;color:var(--ink3);margin-top:12px}
 
-/* シミュレータ */
-.sim{display:grid; grid-template-columns:300px 1fr; gap:24px; margin-top:34px; align-items:start}
-.sim-ctrl{background:#fff; border:1px solid var(--line); border-radius:var(--r); padding:24px; box-shadow:var(--shadow)}
-.sim-ctrl label{display:block; font-size:13px; font-weight:700; color:var(--ink2); margin-top:20px}
+/* ---------- シミュレータ ---------- */
+.sim{display:grid;grid-template-columns:300px 1fr;gap:22px;margin-top:30px;align-items:start}
+.sim-ctrl label{display:block;font-size:13px;font-weight:700;color:var(--ink2);margin-top:18px}
 .sim-ctrl label:first-of-type{margin-top:0}
-.sim-ctrl output{display:block; font-size:24px; font-weight:900; color:var(--navy); font-variant-numeric:tabular-nums; margin:2px 0 6px}
-input[type=range]{width:100%; accent-color:var(--navy)}
-.sim-out{display:grid; grid-template-columns:1fr 1fr; gap:16px}
-.plan{background:#fff; border:1px solid var(--line); border-radius:var(--r); padding:24px}
-.plan.win{border-color:#B9CDEC; box-shadow:var(--shadow)}
-.plan h3{font-size:16px; padding-bottom:12px; border-bottom:1px solid var(--line2)}
-.plan .row{display:flex; justify-content:space-between; gap:12px; padding:11px 0; border-bottom:1px solid var(--line2); font-size:13.5px}
+.sim-ctrl output{display:block;font-size:23px;font-weight:900;color:var(--accent-d);font-variant-numeric:tabular-nums;margin:2px 0 4px}
+input[type=range]{width:100%;accent-color:var(--accent)}
+.sim-out{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.plan h3{font-size:15.5px;padding-bottom:10px;border-bottom:1px solid var(--line2)}
+.plan.win{outline:3px solid var(--accent)}
+.plan .row{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--line2);font-size:13.5px}
 .plan .row:last-child{border-bottom:none}
 .plan .row span{color:var(--ink3)}
-.plan .row b{font-variant-numeric:tabular-nums; font-weight:900; text-align:right}
+.plan .row b{font-variant-numeric:tabular-nums;font-weight:900;text-align:right}
 .plan .v-bad{color:var(--red)}
 .plan .v-good{color:var(--green)}
 
-/* 3者 */
-.who{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:34px}
-.who-card{background:var(--card); border:1px solid var(--line); border-radius:var(--r); padding:26px}
-.who-card h3{padding-bottom:12px; border-bottom:2px solid var(--navy); display:inline-block}
-.who-card ul{list-style:none; margin-top:16px}
-.who-card li{font-size:14px; color:var(--ink2); padding-left:20px; position:relative; margin-top:10px}
-.who-card li::before{content:""; position:absolute; left:2px; top:10px; width:8px; height:8px; border-radius:50%; border:2px solid var(--navy)}
+/* ---------- 対案文 ---------- */
+.doc pre{white-space:pre-wrap;font-family:inherit;font-size:14px;line-height:1.95;color:var(--ink2)}
+.doc-actions{display:flex;gap:10px;margin-top:18px;padding-top:16px;border-top:1px solid var(--line2);flex-wrap:wrap;align-items:center}
 
-/* 対案文 */
-.doc{background:#fff; border:1px solid var(--line); border-radius:var(--r); padding:28px; margin-top:26px; box-shadow:var(--shadow)}
-.doc pre{
-  white-space:pre-wrap; font-family:inherit; font-size:14.5px; line-height:1.95; color:var(--ink2);
-}
-.doc-actions{display:flex; gap:10px; margin-top:20px; padding-top:18px; border-top:1px solid var(--line2); flex-wrap:wrap; align-items:center}
-
-/* 次の一手 */
-.next{background:var(--navy); color:#fff}
+/* ---------- 次 ---------- */
+.next{background:#2A2118;color:#fff}
+.next::before{display:none}
 .next h2{color:#fff}
-.next .lead{color:#C6D4E8}
-.next-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:34px}
-.next-card{background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18); border-radius:var(--r); padding:24px}
-.next-card h3{font-size:16px; color:#fff}
-.next-card p{font-size:14px; color:#C6D4E8; margin-top:10px}
-footer{padding:40px 0 60px; text-align:center; font-size:13px; color:var(--ink3)}
+.next .lead{color:#CBB9A2}
+.next-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:30px}
+.next-card{background:rgba(255,255,255,.08);border-radius:var(--r);padding:22px}
+.next-card h3{font-size:15.5px;color:#fff}
+.next-card p{font-size:13.5px;color:#CBB9A2;margin-top:8px}
+footer{padding:38px 0 56px;text-align:center;font-size:13px;color:var(--ink3)}
 
-@media (max-width:900px){
-  section{padding:64px 0}
-  h2{font-size:24px}
-  .issues,.steps,.who,.next-grid,.sim-out{grid-template-columns:1fr}
-  .screen-grid,.sim{grid-template-columns:1fr}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media(max-width:860px){
+  section{padding:56px 0}
+  h2{font-size:22px}
+  .hero-grid,.zig,.sim,.sim-out,.next-grid{grid-template-columns:1fr}
   .ledger-head{grid-template-columns:1fr 1fr}
-  .hero-meta{gap:18px}
+  .zig .vis{order:2}
+  .phone{width:100%;max-width:320px}
 }
 </style>
 </head>
 <body>
 
-<!-- ================= HERO ================= -->
-<header class="hero">
-  <div class="wrap">
-    <span class="eyebrow">港区 民泊・旅館業 規制強化パブリックコメントへの対案</span>
-    <h1>近所の苦情をその場で受けて、<em>近所に住む人が現場に行って</em>、対応の記録が施設ごとに全部残るので、真面目な民泊が一律規制に巻き込まれない件</h1>
-    <p class="sub">近所ホットライン（プロトタイプ）</p>
-    <p class="lead">苦情を行政の窓口ではなく現場に直結させ、誰がいつ何をしたかを施設単位で記録する。規制を全施設に広げる代わりに、実際に苦情が出ている施設だけを数字で特定するための仕組み。下でそのまま動かせる。</p>
-    <div class="cta-row">
-      <a href="#proto" class="btn btn-primary">プロトタイプを動かす</a>
-      <a href="#doc" class="btn btn-ghost">パブコメ提出用の対案文</a>
-    </div>
-    <div class="hero-meta">
-      <div><b>24時間</b>苦情の受付時間</div>
-      <div><b>15分</b>深夜騒音の到着目標</div>
-      <div><b>1件800円</b>対応した近隣住民への支払い</div>
-      <div><b>全件</b>施設単位で記録・公開</div>
-    </div>
-  </div>
-</header>
-
-<!-- ================= 課題 ================= -->
-<section>
-  <div class="wrap">
-    <span class="eyebrow">現状の問題</span>
-    <h2>いまのパブコメの問題点</h2>
-    <p class="lead">パブリックコメントの設問は「苦情を受ける体制を義務づけるべきか」を住民に聞く形になっている。この聞き方では、民泊と関わりのない住民ほど賛成に回る。集まるのは意見であって、実際に何が起きたかの記録ではない。</p>
-    <div class="issues">
-      <div class="issue">
-        <div class="n">1</div>
-        <h3>設問が答えを決めている</h3>
-        <p>「規制強化が必要か」を賛否で聞けば、当事者でない住民は賛成に回りやすい。設問が挙げる実害の中心は「無人施設で事業者へ連絡が取れない」こと。つまり必要なのは規制ではなく、連絡がつく仕組み。</p>
+<!-- ============ HERO（左コピー・右は実働デモ） ============ -->
+<section class="hero"><div class="wrap">
+  <div class="hero-grid">
+    <div>
+      <span class="eyebrow">港区 民泊・旅館業 規制強化パブリックコメントへの対案</span>
+      <h1>近所の苦情をその場で受けて、<em>近所に住む人が現場に行って</em>、記録が施設ごとに残るので、真面目な民泊が一律規制に巻き込まれない件</h1>
+      <p class="sub">近所ホットライン（プロトタイプ）</p>
+      <p class="lead">規制を全施設に広げる代わりに、苦情の出ている施設だけを数字で特定する仕組み。右のスマホ画面は飾りではなく実際に動く。送信すると下の対応員画面と台帳に流れていく。</p>
+      <div class="cta-row">
+        <a href="#doc" class="btn">パブコメ提出用の対案文</a>
+        <a href="#taicho" class="btn ghost">台帳を見る</a>
       </div>
-      <div class="issue">
-        <div class="n">2</div>
-        <h3>運営者が議論の場にいない</h3>
-        <p>実際に施設を回している事業者が検討の輪の外にいるので、現場で何が効くかの情報が入らない。行政側に残る選択肢が規制の強弱しかなくなる。</p>
-      </div>
-      <div class="issue">
-        <div class="n">3</div>
-        <h3>問題施設と真面目な施設が同じ扱い</h3>
-        <p>一律の義務化は、苦情ゼロの施設にも同じコストをかける。一方で問題を起こしている無許可施設には、そもそも義務が届かない。</p>
+      <div class="hero-meta">
+        <div><b>24時間</b>苦情の受付</div>
+        <div><b>15分</b>深夜騒音の到着目標</div>
+        <div><b>1件800円</b>対応した住民に支払い</div>
+        <div><b>全件</b>施設単位で記録</div>
       </div>
     </div>
-    <div class="quote">
-      <p>「行政に根本的解決能力が無く、仕事してる風だからかと。実際に運営している事業者が、話合いの輪にいないので意味が無い。AIにクレーム内容纏めて投げ、具体的に動いた方が解決早いと思いますよ。現地にお金が落ちる、住人に仕事が回る様になるといいなと思います。」</p>
-      <cite>区内で民泊を運営する仲間の発言（2026年8月20日）。この提案をもとに設計した。</cite>
-    </div>
-  </div>
-</section>
-
-<!-- ================= 仕組み ================= -->
-<section>
-  <div class="wrap">
-    <span class="eyebrow">仕組み</span>
-    <h2>仕組みは3ステップ</h2>
-    <p class="lead">新しい規制を作らずに、いま行政の窓口で止まっている苦情を現場へ流す。処理の過程が自動的に記録になる。</p>
-    <div class="steps">
-      <div class="step">
-        <span class="tag">1 受ける</span>
-        <h3>玄関のQRから24時間</h3>
-        <p>近隣住民は施設の掲示QRか区の共通ページから投稿する。アプリも会員登録も要らない。入力文をその場で分類し、緊急度と到着目標時刻を返す。</p>
-        <ul>
-          <li>騒音・ゴミ・喫煙・駐車・不審の5分類＋その他</li>
-          <li>深夜帯の騒音は自動で最優先</li>
-          <li>投稿者には受付番号と対応状況が返る</li>
-        </ul>
-      </div>
-      <div class="step">
-        <span class="tag">2 動く</span>
-        <h3>半径300mの住民が現場へ</h3>
-        <p>事前登録した近隣住民（対応員）に通知が飛ぶ。最初に受けた人が現場へ行き、状況を確認して1件ごとに報酬を受け取る。深夜も動く人が近所にいるのが強み。</p>
-        <ul>
-          <li>1件800円、深夜割増あり。支払いは月末</li>
-          <li>できるのは声かけ・写真記録・清掃まで</li>
-          <li>深夜帯は対応員への通知と同時に施設運営者へも連絡</li>
-          <li>危険と判断したら接触せず警察・消防へ切り替え</li>
-        </ul>
-      </div>
-      <div class="step">
-        <span class="tag">3 残る</span>
-        <h3>施設ごとの台帳になる</h3>
-        <p>苦情の受付から完了までが施設単位で積み上がる。町丁目別の件数、平均対応時間、再発率が出る。ここで初めて「どの施設が問題か」が意見ではなく数字になる。</p>
-        <ul>
-          <li>行政は集計値を閲覧、事業者は自施設の全件を閲覧</li>
-          <li>再発3回以上は自動で改善指導の対象に</li>
-          <li>苦情ゼロの施設は追加の義務を負わない</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= プロトタイプ ================= -->
-<section class="proto-sec" id="proto">
-  <div class="wrap">
-    <span class="eyebrow">プロトタイプ</span>
-    <h2>デモ：苦情1件を送信から完了まで試す</h2>
-    <p class="lead">住民として投稿すると、対応員の画面に通知が届き、完了させると台帳の数字が動く。3つのタブは同じ1件のデータを見ている。入力した内容はこの画面の中だけで処理され、どこにも送信されない。</p>
-
-    <div class="tabs" role="tablist">
-      <button class="tab on" data-tab="a" role="tab">1. 近隣住民（苦情を出す）</button>
-      <button class="tab" data-tab="b" role="tab">2. 対応員（現場に行く）</button>
-      <button class="tab" data-tab="c" role="tab">3. 台帳（行政・事業者が見る）</button>
-    </div>
-
-    <!-- panel A -->
-    <div class="panel on" id="panel-a">
-      <div class="screen-grid">
-        <div class="phone">
-          <div class="phone-bar"><span>近所ホットライン</span><span id="clockA">--:--</span></div>
-          <div class="phone-body">
-            <div class="field">
-              <label for="place">場所</label>
-              <select id="place">
-                <option value="MT-3A">港区◯◯ 3丁目 / 施設A（許可あり）</option>
-                <option value="MT-1C">港区◯◯ 1丁目 / 施設C（許可あり）</option>
-                <option value="MT-5F">港区◯◯ 5丁目 / 施設F（届出情報なし）</option>
-              </select>
-            </div>
-            <div class="field">
-              <label for="body">何が起きているか</label>
-              <textarea id="body" rows="4" placeholder="例）隣の建物のベランダで大声と音楽。さっきから1時間ほど続いています。"></textarea>
-              <div class="chips" id="chips">
-                <button class="chip">ベランダで大声と音楽が1時間続いている</button>
-                <button class="chip">ゴミが分別されず道路に出されている</button>
-                <button class="chip">共用廊下でタバコを吸っている</button>
-                <button class="chip">スーツケースの音が深夜まで続く</button>
-              </div>
-            </div>
-            <div class="field">
-              <label for="hour">いまの時刻（デモ用に変更できる）</label>
-              <select id="hour">
-                <option value="23">23時台（深夜帯）</option>
-                <option value="14">14時台（日中）</option>
-                <option value="8">8時台（朝）</option>
-              </select>
-            </div>
-            <button class="btn-full" id="send">送信する</button>
-            <div id="replyBox"></div>
+    <div>
+      <div class="phone"><div class="scr">
+        <div class="phone-bar"><span>近所ホットライン</span><span id="clockA">--:--</span></div>
+        <div class="phone-bd">
+          <div class="field">
+            <label for="place">場所</label>
+            <select id="place">
+              <option value="MT-3A">港区◯◯ 3丁目 / 施設A（許可あり）</option>
+              <option value="MT-1C">港区◯◯ 1丁目 / 施設C（許可あり）</option>
+              <option value="MT-5F">港区◯◯ 5丁目 / 施設F（届出情報なし）</option>
+            </select>
           </div>
-        </div>
-        <div class="side">
-          <h3>受付時に自動で判定していること</h3>
-          <p class="hint">送信した瞬間に文面から種類と緊急度を判定し、担当と到着目標を決める。行政の窓口を経由しない。</p>
-          <div id="analysis"><div class="empty">左のフォームから送信すると、ここに判定内容が出ます。</div></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- panel B -->
-    <div class="panel" id="panel-b">
-      <div class="screen-grid">
-        <div class="phone">
-          <div class="phone-bar"><span>対応員（近隣住民）</span><span id="clockB">--:--</span></div>
-          <div class="phone-body">
-            <div id="respList"><div class="empty">通知はありません。タブ1から苦情を送信してください。</div></div>
-            <div class="wallet"><span>今月の受取額</span><b id="wallet">0円</b></div>
+          <div class="field">
+            <label for="body">何が起きているか</label>
+            <textarea id="body" rows="3" placeholder="例）隣の建物のベランダで大声と音楽。1時間ほど続いています。"></textarea>
+            <div class="chips" id="chips">
+              <button class="chip">ベランダで大声と音楽が続いている</button>
+              <button class="chip">ゴミが分別されず道路に出ている</button>
+              <button class="chip">共用廊下でタバコを吸っている</button>
+            </div>
           </div>
+          <div class="field">
+            <label for="hour">いまの時刻（デモ用に変更できる）</label>
+            <select id="hour">
+              <option value="23">23時台（深夜帯）</option>
+              <option value="14">14時台（日中）</option>
+              <option value="8">8時台（朝）</option>
+            </select>
+          </div>
+          <button class="btn-full" id="send">送信する</button>
+          <div id="replyBox"></div>
+          <div id="analysis"></div>
         </div>
-        <div class="side">
-          <h3>対応員は誰か</h3>
-          <p class="hint">半径300m以内に住む登録者。元の大家、近所の商店主、夜勤明けの住民など。既に地域にいる人に仕事として回す設計にしている。</p>
-          <ul class="plain-list">
-            <li>研修は動画40分と現地1回。資格は不要</li>
-            <li>受けるかどうかは毎回自由。応答しなくても不利益はない</li>
-            <li>暴力・違法行為が疑われる場合は接触せず110番へ切り替え</li>
-            <li>報酬は1件800円（22時以降は1200円）。原資は施設側の月額利用料</li>
-          </ul>
-          <div id="logBox" style="margin-top:20px"></div>
-        </div>
-      </div>
+      </div></div>
     </div>
+  </div>
+</div></section>
 
-    <!-- panel C -->
-    <div class="panel" id="panel-c">
-      <div class="side">
-        <h3>港区 民泊苦情台帳（デモデータ＋あなたが入れた1件）</h3>
-        <p class="hint">直近90日分。行政が見るのはこの集計、事業者が見るのは自施設の明細。氏名や部屋番号は台帳に残さない。</p>
-        <div class="ledger-head">
-          <div class="stat"><span>登録施設数</span><b id="s1">142</b></div>
-          <div class="stat"><span>苦情 総件数</span><b id="s2">0</b></div>
-          <div class="stat"><span>平均対応時間</span><b id="s3">0分</b></div>
-          <div class="stat"><span>改善指導の対象</span><b id="s4" style="color:var(--red)">0施設</b></div>
-        </div>
-        <div class="table-scroll">
-          <table>
-            <thead><tr><th>施設</th><th>所在</th><th>許可</th><th>苦情</th><th>平均対応</th><th>再発</th><th>判定</th></tr></thead>
-            <tbody id="ledgerBody"></tbody>
-          </table>
-        </div>
-        <p class="note">判定の基準：90日で苦情3件以上かつ再発2回以上を「改善指導の対象」とする。この2つの数字は条例側で決める運用値で、規制の強弱ではなく閾値の調整で制御できる。</p>
+<!-- ============ 2 対応員（zigzag: 左テキスト・右実働） ============ -->
+<section class="band"><div class="wrap">
+  <div class="zig">
+    <div class="txt">
+      <span class="n">2</span>
+      <h3>通知を受けた近所の住民が現場へ行く</h3>
+      <p>事前登録した半径300m以内の住民（対応員）に通知が届く。最初に受けた人が現場に行き、状況を確認して1件ごとに報酬を受け取る。深夜も動ける人が近所にいるのが強み。</p>
+      <ul>
+        <li>1件800円、22時以降は1200円。支払いは月末</li>
+        <li>受けるかどうかは毎回自由。応答しなくても不利益はない</li>
+        <li>できるのは声かけ・写真記録・清掃まで</li>
+        <li>深夜帯は対応員への通知と同時に施設運営者へも連絡</li>
+        <li>危険と判断したら接触せず警察・消防へ切り替え</li>
+      </ul>
+      <div id="logBox" style="margin-top:14px"></div>
+    </div>
+    <div class="vis">
+      <div class="vis-box">
+        <div style="font-size:13px;font-weight:700;color:var(--ink3);margin-bottom:10px">対応員の画面（上のフォームから送信すると届く）<span id="clockB" style="float:right;font-variant-numeric:tabular-nums"></span></div>
+        <div id="respList"><div class="empty">通知はありません。上のスマホから苦情を送信してください。</div></div>
+        <div class="wallet"><span>今月の受取額</span><b id="wallet">0円</b></div>
       </div>
     </div>
   </div>
-</section>
+</div></section>
 
-<!-- ================= シミュレータ ================= -->
-<section>
-  <div class="wrap">
-    <span class="eyebrow">比較</span>
-    <h2>一律規制と記録運用の比較</h2>
-    <p class="lead">区内の施設数と、実際に苦情が出ている施設の割合を動かして比べる。数字は下記の仮定に基づく試算で、実測値ではない。</p>
-    <div class="sim">
-      <div class="sim-ctrl">
-        <label for="r1">区内の届出・許可施設数</label>
-        <output id="o1">142施設</output>
-        <input type="range" id="r1" min="40" max="600" value="142" step="1">
-
-        <label for="r2">苦情が出ている施設の割合</label>
-        <output id="o2">8%</output>
-        <input type="range" id="r2" min="1" max="40" value="8" step="1">
-
-        <label for="r3">無許可で運営している施設数</label>
-        <output id="o3">35施設</output>
-        <input type="range" id="r3" min="0" max="200" value="35" step="1">
+<!-- ============ 3 台帳（zigzag rev: 左実働・右テキスト） ============ -->
+<section id="taicho"><div class="wrap">
+  <div class="zig">
+    <div class="vis">
+      <div class="ledger-head">
+        <div class="stat"><span>登録施設数</span><b id="s1">142</b></div>
+        <div class="stat"><span>苦情 総件数</span><b id="s2">0</b></div>
+        <div class="stat"><span>平均対応時間</span><b id="s3">0分</b></div>
+        <div class="stat"><span>改善指導の対象</span><b id="s4" style="color:var(--red)">0施設</b></div>
       </div>
-      <div class="sim-out">
-        <div class="plan">
-          <h3>案A：一律の規制強化</h3>
-          <div class="row"><span>新たな義務の対象</span><b id="a1">-</b></div>
-          <div class="row"><span>うち苦情ゼロの施設</span><b id="a2" class="v-bad">-</b></div>
-          <div class="row"><span>事業者の負担合計 / 年</span><b id="a3" class="v-bad">-</b></div>
-          <div class="row"><span>対処が届く問題施設</span><b id="a4" class="v-bad">-</b></div>
-          <div class="row"><span>地域に落ちるお金</span><b id="a5">0円</b></div>
-        </div>
-        <div class="plan win">
-          <h3>案B：苦情の記録運用</h3>
-          <div class="row"><span>新たな義務の対象</span><b id="b1">-</b></div>
-          <div class="row"><span>うち苦情ゼロの施設</span><b id="b2" class="v-good">0施設</b></div>
-          <div class="row"><span>年間の苦情件数</span><b id="b6">-</b></div>
-          <div class="row"><span>事業者の負担合計 / 年</span><b id="b3">-</b></div>
-          <div class="row"><span>対処が届く問題施設</span><b id="b4" class="v-good">-</b></div>
-          <div class="row"><span>地域に落ちるお金</span><b id="b5" class="v-good">-</b></div>
-        </div>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>施設</th><th>所在</th><th>許可</th><th>苦情</th><th>平均対応</th><th>再発</th><th>判定</th></tr></thead>
+          <tbody id="ledgerBody"></tbody>
+        </table>
       </div>
     </div>
-    <p class="note">試算の前提：案Aはコールセンター外注の想定で1施設あたり年12万円、無許可施設には義務が届かないため対象外。案Bは苦情実績のある施設のみ月5,000円の利用料、苦情1件あたり800円が対応した住民に渡る。1施設あたり年6件の苦情を仮定。無許可施設は苦情の発生源として台帳に載り、通報位置から特定できる。</p>
+    <div class="txt">
+      <span class="n">3</span>
+      <h3>対応の記録が施設ごとの台帳になる</h3>
+      <p>苦情の受付から完了までが施設単位で積み上がる。ここで初めて「どの施設が問題か」が意見ではなく数字になる。</p>
+      <ul>
+        <li>行政は集計値を閲覧、事業者は自施設の全件を閲覧</li>
+        <li>90日で苦情3件以上かつ再発2回以上だけが改善指導の対象</li>
+        <li>苦情ゼロの施設には義務も費用も発生しない</li>
+        <li>無許可施設も苦情の発生位置から台帳に載る</li>
+        <li>氏名や部屋番号は台帳に残さない</li>
+      </ul>
+      <p class="note">閾値（3件・2回）は条例側で決める運用値。規制の強弱ではなく数字の調整で制御できる。</p>
+    </div>
   </div>
-</section>
+</div></section>
 
-<!-- ================= 誰が得するか ================= -->
-<section>
-  <div class="wrap">
-    <span class="eyebrow">立場ごとの影響</span>
-    <h2>立場ごとのメリット</h2>
-    <div class="who">
-      <div class="who-card">
-        <h3>近隣住民</h3>
-        <ul>
-          <li>深夜でも受付が繋がり、目標時刻が返ってくる</li>
-          <li>対応員として登録すれば1件800円の収入になる</li>
-          <li>苦情を出しても身元が施設側に渡らない</li>
-          <li>改善されない施設は記録として積み上がる</li>
-        </ul>
+<!-- ============ 比較シミュレータ ============ -->
+<section class="band"><div class="wrap">
+  <span class="eyebrow">比較</span>
+  <h2>一律規制と記録運用の比較</h2>
+  <p class="lead">区内の施設数と苦情の割合を動かして比べる。数字は下記の仮定に基づく試算で、実測値ではない。</p>
+  <div class="sim">
+    <div class="card sim-ctrl">
+      <label for="r1">区内の届出・許可施設数</label>
+      <output id="o1">142施設</output>
+      <input type="range" id="r1" min="40" max="600" value="142" step="1">
+      <label for="r2">苦情が出ている施設の割合</label>
+      <output id="o2">8%</output>
+      <input type="range" id="r2" min="1" max="40" value="8" step="1">
+      <label for="r3">無許可で運営している施設数</label>
+      <output id="o3">35施設</output>
+      <input type="range" id="r3" min="0" max="200" value="35" step="1">
+    </div>
+    <div class="sim-out">
+      <div class="card plan">
+        <h3 style="color:var(--red)">案A：一律の規制強化</h3>
+        <div class="row"><span>新たな義務の対象</span><b id="a1">-</b></div>
+        <div class="row"><span>うち苦情ゼロの施設</span><b id="a2" class="v-bad">-</b></div>
+        <div class="row"><span>事業者の負担合計 / 年</span><b id="a3" class="v-bad">-</b></div>
+        <div class="row"><span>対処が届く問題施設</span><b id="a4" class="v-bad">-</b></div>
+        <div class="row"><span>地域に落ちるお金</span><b id="a5">0円</b></div>
       </div>
-      <div class="who-card">
-        <h3>運営事業者</h3>
-        <ul>
-          <li>深夜に自分で駆けつける必要がなくなる</li>
-          <li>苦情ゼロなら追加の義務も費用も発生しない</li>
-          <li>「平均対応7分・再発ゼロ」を実績として示せる</li>
-          <li>クレームの内容が分類されて届くので原因を潰せる</li>
-        </ul>
-      </div>
-      <div class="who-card">
-        <h3>行政</h3>
-        <ul>
-          <li>苦情の一次対応を持たずに件数と結果を把握できる</li>
-          <li>指導対象を印象ではなく記録で選べる</li>
-          <li>無許可施設が苦情の発生位置から浮かび上がる</li>
-          <li>条例は閾値の数字だけを決めればよい</li>
-        </ul>
+      <div class="card plan win">
+        <h3 style="color:var(--green)">案B：苦情の記録運用</h3>
+        <div class="row"><span>新たな義務の対象</span><b id="b1">-</b></div>
+        <div class="row"><span>うち苦情ゼロの施設</span><b id="b2" class="v-good">0施設</b></div>
+        <div class="row"><span>年間の苦情件数</span><b id="b6">-</b></div>
+        <div class="row"><span>事業者の負担合計 / 年</span><b id="b3">-</b></div>
+        <div class="row"><span>対処が届く問題施設</span><b id="b4" class="v-good">-</b></div>
+        <div class="row"><span>地域に落ちるお金</span><b id="b5" class="v-good">-</b></div>
       </div>
     </div>
   </div>
-</section>
+  <p class="note">試算の前提：案Aはコールセンター外注の想定で1施設あたり年12万円、無許可施設には義務が届かないため対象外。案Bは苦情実績のある施設のみ月5,000円の利用料、苦情1件あたり800円が対応した住民に渡る。1施設あたり年6件の苦情を仮定。</p>
+</div></section>
 
-<!-- ================= 対案文 ================= -->
-<section id="doc">
-  <div class="wrap">
-    <span class="eyebrow">提出用文面</span>
-    <h2>パブリックコメント提出用の対案文</h2>
-    <p class="lead">「規制強化に反対」だけでは意見として弱い。代わりに何をするかまで書いた案。コピーして自分の言葉に直して提出できる。</p>
-    <div class="doc">
-      <pre id="docText">【意見】苦情受付体制の一律義務化ではなく、苦情の処理記録を施設単位で残す運用を求めます。
+<!-- ============ 対案文 ============ -->
+<section id="doc"><div class="wrap">
+  <span class="eyebrow">提出用文面</span>
+  <h2>パブリックコメント提出用の対案文</h2>
+  <p class="lead">「規制強化に反対」だけでは意見として弱い。代わりに何をするかまで書いた案。コピーして自分の言葉に直して提出できる。</p>
+  <div class="card doc" style="margin-top:22px">
+    <pre id="docText">【意見】苦情受付体制の一律義務化ではなく、苦情の処理記録を施設単位で残す運用を求めます。
 
 1. 現行案の問題点
 苦情受付体制の義務化は、既に苦情が発生していない施設にも同一の費用を課す一方、無許可で運営されている施設には義務が届きません。負担は適法に運営している事業者に集中し、実際の生活環境の悪化要因は残ります。
@@ -540,46 +366,43 @@ footer{padding:40px 0 60px; text-align:center; font-size:13px; color:var(--ink3)
 
 4. 検討の進め方について
 現在の検討には、実際に施設を運営している事業者が参加していないと理解しています。運営実態を持つ事業者と近隣住民を交えた意見交換の場を設けたうえで、規制内容を確定することを求めます。</pre>
-      <div class="doc-actions">
-        <button class="btn btn-primary" id="copyDoc">全文をコピー</button>
-        <span class="note" style="margin:0" id="copyMsg"></span>
-      </div>
+    <div class="doc-actions">
+      <button class="btn" id="copyDoc">全文をコピー</button>
+      <span class="note" style="margin:0" id="copyMsg"></span>
     </div>
   </div>
-</section>
+</div></section>
 
-<!-- ================= 次 ================= -->
-<section class="next">
-  <div class="wrap">
-    <span class="eyebrow" style="background:rgba(255,255,255,.14); color:#fff">次の一手</span>
-    <h2>次に必要な情報</h2>
-    <p class="lead">ここから先は、実際に運営している人の数字がないと精度が出ません。3人に聞きたいことがあります。</p>
-    <div class="next-grid">
-      <div class="next-card">
-        <h3>実際の苦情の中身</h3>
-        <p>過去に受けた苦情を、種類と時刻だけでいいので出してもらえれば、分類の精度と到着目標を実データに合わせられます。個人情報は不要です。</p>
-      </div>
-      <div class="next-card">
-        <h3>対応員になりそうな人</h3>
-        <p>1件800円で深夜に現場を見に行ける人が、施設の近くに何人いるか。ここが成立すれば残りは全部作れます。</p>
-      </div>
-      <div class="next-card">
-        <h3>パブコメの締切と提出先</h3>
-        <p>対案文は上に用意しました。締切と様式が分かれば、港区の書式に合わせて整えます。</p>
-      </div>
+<!-- ============ 次 ============ -->
+<section class="next"><div class="wrap">
+  <span class="eyebrow" style="background:rgba(255,255,255,.14);color:#fff">次の一手</span>
+  <h2>次に必要な情報</h2>
+  <p class="lead">ここから先は、実際に運営している人の数字がないと精度が出ない。3人に聞きたいことがある。</p>
+  <div class="next-grid">
+    <div class="next-card">
+      <h3>実際の苦情の中身</h3>
+      <p>過去に受けた苦情を、種類と時刻だけでいいので出してもらえれば、分類の精度と到着目標を実データに合わせられる。個人情報は不要。</p>
+    </div>
+    <div class="next-card">
+      <h3>対応員になりそうな人</h3>
+      <p>1件800円で深夜に現場を見に行ける人が、施設の近くに何人いるか。ここが成立すれば残りは全部作れる。</p>
+    </div>
+    <div class="next-card">
+      <h3>パブコメの締切と提出先</h3>
+      <p>対案文は上に用意した。締切と様式が分かれば、港区の書式に合わせて整える。</p>
     </div>
   </div>
-</section>
+</div></section>
 
 <footer>
-  <div class="narrow">
+  <div class="wrap">
     近所ホットライン（プロトタイプ）／ 2026年8月・ユウキ 作<br>
     この画面のデータは全てデモ用で、入力内容はどこにも送信されません。施設名は実在の施設を指しません。
   </div>
 </footer>
 
 <script>
-/* ================= 分類ルール（LLMは使わない。判定根拠が見えるようにする） ================= */
+/* ================= 分類ルール（LLM不使用・判定根拠を表示する） ================= */
 const RULES = [
   {key:'騒音', re:/騒音|うるさ|音楽|大声|さわ|騒い|深夜まで|足音|どんどん|ドンドン|パーティ|叫/, sla:15, base:'high'},
   {key:'ゴミ', re:/ゴミ|ごみ|分別|生ゴミ|袋|散乱|カラス|臭/, sla:120, base:'mid'},
@@ -624,14 +447,6 @@ const FACILITIES = [
 const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
 
-/* ================= タブ ================= */
-$$('.tab').forEach(t => t.onclick = () => {
-  $$('.tab').forEach(x => x.classList.remove('on'));
-  $$('.panel').forEach(x => x.classList.remove('on'));
-  t.classList.add('on');
-  $('#panel-' + t.dataset.tab).classList.add('on');
-});
-
 /* ================= 時計 ================= */
 function tick(){
   const h = $('#hour').value.padStart(2,'0');
@@ -656,44 +471,31 @@ $('#send').onclick = () => {
   const t = {id, text, cat:r.cat, lv:r.lv, sla:r.sla, fac, night:r.night, state:'new', start:Date.now(), mins:0};
   myTickets.unshift(t);
 
-  $('#analysis').innerHTML = `
-    <div class="ticket">
-      <div class="ticket-top">
-        <span class="id">受付番号 ${id}</span>
-        <span class="badge ${LV[r.lv][1]}">${r.cat}／${LV[r.lv][0]}</span>
-      </div>
-      <div class="meta"><span>到着目標：${r.sla}分以内</span><span>${fac.area} ${fac.name}</span></div>
-      <div class="txt" style="font-size:13px;color:var(--ink3);margin-top:14px">判定の根拠</div>
-      <ul style="list-style:none;margin-top:6px">
-        ${r.reasons.map(x => `<li style="font-size:13.5px;color:var(--ink2);padding-left:18px;position:relative;margin-top:6px"><span style="position:absolute;left:2px;top:9px;width:6px;height:6px;border-radius:2px;background:var(--navy)"></span>${x}</li>`).join('')}
-      </ul>
-    </div>`;
-
   $('#replyBox').innerHTML = `
     <div class="reply">
       <div class="t">自動返信</div>
-      <p>受け付けました（${id}）。<br>${r.cat}として${LV[r.lv][0]}で処理します。近くの対応員へ通知しました。到着目標は${r.sla}分以内です。<br>状況はこの番号で確認できます。</p>
+      <p>受け付けました（${id}）。${r.cat}として${LV[r.lv][0]}で処理します。到着目標${r.sla}分。近くの対応員へ通知しました。</p>
+    </div>`;
+  $('#analysis').innerHTML = `
+    <div class="reasons">
+      <div class="t">受付時に自動判定した根拠</div>
+      <ul>${r.reasons.map(x => `<li>${x}</li>`).join('')}</ul>
     </div>`;
 
   renderResp();
   renderLedger();
   $('#body').value = '';
-
-  // 対応員タブへ誘導
-  const b = $$('.tab').find(x => x.dataset.tab === 'b');
-  b.style.background = '#fff'; b.style.color = 'var(--navy)';
-  setTimeout(() => { b.style.background=''; b.style.color=''; }, 2400);
 };
 
 /* ================= 対応員 ================= */
 function renderResp(){
   const box = $('#respList');
-  if (!myTickets.length){ box.innerHTML = '<div class="empty">通知はありません。タブ1から苦情を送信してください。</div>'; return; }
+  if (!myTickets.length){ box.innerHTML = '<div class="empty">通知はありません。上のスマホから苦情を送信してください。</div>'; return; }
   box.innerHTML = myTickets.map(t => {
     if (t.state === 'done'){
       return `<div class="ticket">
         <div class="ticket-top"><span class="id">${t.id}</span><span class="badge b-done">完了 ${t.mins}分</span></div>
-        <div class="txt">${esc(t.text)}</div>
+        <div class="txt2">${esc(t.text)}</div>
         <div class="meta"><span>${t.fac.area} ${t.fac.name}</span><span>報告：${t.result}</span></div>
       </div>`;
     }
@@ -703,7 +505,7 @@ function renderResp(){
         <span class="id">${t.id}　${t.fac.area} ${t.fac.name}</span>
         <span class="badge ${LV[t.lv][1]}">${t.cat}／到着目標${t.sla}分</span>
       </div>
-      <div class="txt">${esc(t.text)}</div>
+      <div class="txt2">${esc(t.text)}</div>
       <div class="meta"><span>経過 <span class="timer" data-id="${t.id}">0:00</span></span><span>報酬 ${t.night?1200:800}円</span></div>
       ${going ? `
         <div class="resp-actions">
@@ -724,7 +526,6 @@ function renderResp(){
   });
   box.querySelectorAll('[data-skip]').forEach(b => b.onclick = () => {
     const t = myTickets.find(x => x.id === b.dataset.skip);
-    t.skipped = true;
     b.closest('.resp-actions').innerHTML = '<span class="note" style="margin:0">見送りました。半径を広げて次の対応員へ再通知します。</span>';
     setTimeout(() => renderResp(), 1600);
   });
@@ -734,7 +535,6 @@ function renderResp(){
     t.mins = Math.max(1, Math.round((Date.now() - t.start) / 60000) || Math.ceil(Math.random()*6)+3);
     wallet += t.night ? 1200 : 800;
     $('#wallet').textContent = wallet.toLocaleString() + '円';
-    // 台帳へ反映
     t.fac.c += 1;
     t.fac.avg = t.fac.avg ? Math.round((t.fac.avg + t.mins) / 2) : t.mins;
     if (t.fac.c >= 3) t.fac.re += 1;
@@ -762,7 +562,7 @@ function renderLedger(){
                 : f.c === 0 ? '<span class="badge b-done">苦情なし</span>'
                 : '<span class="badge b-low">経過観察</span>';
     return `<tr class="${flag?'flag':''}">
-      <td><b>${f.name}</b><br><span style="font-size:11.5px;color:var(--ink3)">${f.id}</span></td>
+      <td><b>${f.name}</b><br><span style="font-size:12px;color:var(--ink3)">${f.id}</span></td>
       <td>${f.area}</td>
       <td>${f.permit === '許可あり' ? '許可あり' : '<span style="color:var(--red);font-weight:700">届出情報なし</span>'}</td>
       <td class="num">${f.c}件</td>
@@ -790,17 +590,16 @@ const yen = n => n >= 100000000 ? (n/100000000).toFixed(1) + '億円'
               : n.toLocaleString() + '円';
 
 function sim(){
-  const total = +$('#r1').value;          // 許可施設数
-  const pct   = +$('#r2').value;          // 苦情発生率(%)
-  const illegal = +$('#r3').value;        // 無許可施設数
+  const total = +$('#r1').value;
+  const pct   = +$('#r2').value;
+  const illegal = +$('#r3').value;
   $('#o1').textContent = total + '施設';
   $('#o2').textContent = pct + '%';
   $('#o3').textContent = illegal + '施設';
 
-  const noisy = Math.round(total * pct / 100);   // 苦情の出ている許可施設
+  const noisy = Math.round(total * pct / 100);
   const quiet = total - noisy;
 
-  // 案A：一律規制
   const aCost = total * 120000;
   $('#a1').textContent = total + '施設';
   $('#a2').textContent = quiet + '施設';
@@ -808,8 +607,7 @@ function sim(){
   $('#a4').textContent = noisy + '施設（無許可' + illegal + '施設には届かない）';
   $('#a5').textContent = '0円';
 
-  // 案B：記録運用
-  const cases = noisy * 6;                        // 年間苦情件数
+  const cases = noisy * 6;
   const bCost = noisy * 5000 * 12;
   const pay   = cases * 800;
   $('#b1').textContent = noisy + '施設';
@@ -836,7 +634,7 @@ $('#copyDoc').onclick = async () => {
 /* ================= init ================= */
 tick(); renderLedger(); renderResp(); sim();
 
-/* ---- 自己チェック（?test=1 で実行。分類ロジックが壊れたら画面上部に赤帯） ---- */
+/* ---- 自己チェック（?test=1） ---- */
 if (location.search.includes('test=1')){
   const t = [];
   const a = classify('ベランダで大声と音楽が続いている', 23);
