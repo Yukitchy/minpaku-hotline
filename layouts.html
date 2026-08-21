@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>段組5案切替｜近所ホットライン</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --accent:#D9730D; --accent-l:#FAEBD9;
+  --ink:#3A2E20; --ink2:#5C4E3C; --ink3:#8A7A64;
+  --bg:#F5F1EB; --bg2:#EFE9E0; --card:#FFFFFF;
+  --line:#E5DDD0; --green:#0F7A55; --green-l:#E9F6F0;
+  --red:#C43A28; --red-l:#FCEDEA;
+  --deco:rgba(217,115,13,.08); --r:20px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Noto Sans JP",system-ui,-apple-system,"Hiragino Sans",sans-serif;
+  background:var(--bg); color:var(--ink); line-height:1.85; font-size:15.5px;
+  -webkit-font-smoothing:antialiased; word-break:auto-phrase; line-break:strict}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+h1,h2,h3{line-height:1.5; text-wrap:balance}
+.wrap{max-width:1020px;margin:0 auto;padding:0 24px}
+.eyebrow{display:inline-block;font-size:12.5px;font-weight:700;letter-spacing:.12em;
+  color:var(--accent);background:var(--accent-l);padding:6px 13px;border-radius:99px}
+.btn{display:inline-block;background:var(--accent);color:#fff;font-weight:700;
+  padding:14px 26px;border-radius:99px;text-decoration:none;font-size:15px}
+.btn.ghost{background:#fff;color:var(--accent)}
+.layout{display:none}
+.layout.on{display:block}
+section{position:relative;overflow:hidden;padding:72px 0}
+.wrap{position:relative;z-index:1}
+section:nth-of-type(odd)::before{content:"";position:absolute;pointer-events:none;top:-40px;right:-60px;
+  width:220px;height:220px;background:var(--deco);border-radius:0 0 0 100%}
+section:nth-of-type(even)::before{content:"";position:absolute;pointer-events:none;bottom:24px;right:-10px;
+  width:180px;height:140px;background-image:radial-gradient(var(--deco) 2px,transparent 2px);background-size:18px 18px}
+
+/* 共通パーツ */
+.stats{display:flex;gap:26px;flex-wrap:wrap}
+.stats div{font-size:13px;color:var(--ink3)}
+.stats b{display:block;font-size:22px;font-weight:900;color:var(--ink)}
+.card{background:var(--card);border-radius:var(--r);padding:24px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:center}
+.n{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:10px;
+  background:var(--accent-l);color:var(--accent);font-weight:900;font-size:14px;margin-bottom:10px}
+.small{font-size:13.5px;color:var(--ink2)}
+
+/* スマホモック */
+.phone{width:270px;background:#2A2118;border-radius:34px;padding:8px;margin:0 auto}
+.phone .scr{background:#fff;border-radius:27px;overflow:hidden}
+.phone .bar{background:var(--accent);color:#fff;font-size:12px;font-weight:700;
+  padding:11px 14px;display:flex;justify-content:space-between}
+.phone .bd{padding:14px}
+.phone label{display:block;font-size:11px;font-weight:700;color:var(--ink2);margin:10px 0 4px}
+.phone .fld{border:1.5px solid var(--line);border-radius:9px;padding:8px 10px;font-size:12px;color:var(--ink3)}
+.phone .send{background:var(--accent);color:#fff;text-align:center;border-radius:10px;
+  padding:10px;font-size:13px;font-weight:700;margin-top:12px}
+.phone .rep{background:var(--green-l);border-radius:9px;padding:9px 10px;font-size:11.5px;margin-top:10px;color:#12503A}
+
+/* 台帳ミニ */
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:14px;overflow:hidden}
+th,td{padding:10px 12px;text-align:left;font-size:13px;border-bottom:1px solid var(--bg2)}
+th{background:#F8F4EE;font-size:12px;color:var(--ink3);font-weight:700}
+tr:last-child td{border-bottom:none}
+.bad td{background:var(--red-l)}
+.badge{font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:99px;white-space:nowrap}
+.b-ok{background:var(--green-l);color:var(--green)} .b-ng{background:#fff;color:var(--red);box-shadow:inset 0 0 0 1px rgba(196,58,40,.35)}
+.b-md{background:var(--accent-l);color:var(--accent)}
+
+/* 切替バー */
+#layout-bar{position:fixed;left:14px;bottom:14px;z-index:9999;display:flex;gap:6px;
+  background:#2A2118;padding:8px;border-radius:99px;flex-wrap:wrap}
+#layout-bar button{color:#fff;font-size:13px;font-weight:700;padding:8px 13px;border-radius:99px}
+#layout-bar button.on{background:#fff;color:#2A2118}
+
+/* ---- L1 王道縦積み ---- */
+.l1-hero{padding:72px 0 60px;text-align:left}
+.l1-hero h1{font-size:clamp(24px,3.4vw,36px);font-weight:900;max-width:20em;margin:18px 0 0}
+.l1-hero h1 em{font-style:normal;color:var(--accent)}
+.l1-hero p.lead{margin-top:18px;max-width:44em;color:var(--ink2)}
+.l1-cta{display:flex;gap:12px;margin-top:26px}
+
+/* ---- L2 プロダクト型 ---- */
+.l2-hero{display:grid;grid-template-columns:1.15fr .85fr;gap:30px;align-items:center;padding:60px 0 50px}
+.l2-hero h1{font-size:clamp(23px,3vw,33px);font-weight:900;margin-top:16px}
+.l2-hero h1 em{font-style:normal;color:var(--accent)}
+.zig{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:center;margin-top:44px}
+.zig:first-of-type{margin-top:0}
+.zig .vis{background:var(--bg2);border-radius:var(--r);padding:26px;text-align:center}
+.zig.rev .vis{order:-1}
+.miniled{background:#fff;border-radius:14px;padding:14px;text-align:left;font-size:12.5px}
+.miniled .row{display:flex;justify-content:space-between;padding:7px 4px;border-bottom:1px solid var(--bg2)}
+.miniled .row:last-child{border-bottom:none}
+
+/* ---- L3 ストーリー型 ---- */
+.chat{max-width:660px;margin:0 auto}
+.msg{display:flex;gap:10px;margin-top:16px}
+.msg .av{width:38px;height:38px;border-radius:50%;flex-shrink:0;display:grid;place-items:center;
+  font-size:12px;font-weight:900;color:#fff;background:#A08A6C}
+.msg.k .av{background:#5B8DB8}
+.msg .bub{background:#fff;border-radius:4px 18px 18px 18px;padding:12px 16px;font-size:14px;color:var(--ink2)}
+.msg.me{flex-direction:row-reverse}
+.msg.me .av{background:var(--accent)}
+.msg.me .bub{background:var(--accent-l);border-radius:18px 4px 18px 18px;color:var(--ink)}
+.chat .divider{text-align:center;font-size:12.5px;color:var(--ink3);margin:28px 0 10px;font-weight:700}
+
+/* ---- L4 データ型 ---- */
+.l4-top{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:24px}
+.l4-top .card{padding:16px}
+.l4-top span{font-size:12px;color:var(--ink3);font-weight:700}
+.l4-top b{display:block;font-size:24px;font-weight:900;margin-top:2px}
+.l4-main{display:grid;grid-template-columns:1.4fr 1fr;gap:22px;margin-top:22px;align-items:start}
+
+/* ---- L5 紙面型 ---- */
+.l5{--r:4px}
+.l5 .masthead{border-bottom:3px solid var(--ink);padding:34px 0 16px;display:flex;
+  justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px}
+.l5 .masthead h1{font-size:26px;font-weight:900}
+.l5 .masthead .date{font-size:12.5px;color:var(--ink3)}
+.l5 .headline{font-size:clamp(26px,3.6vw,40px);font-weight:900;line-height:1.45;padding:30px 0 8px;max-width:22em}
+.l5 .cols{column-count:3;column-gap:30px;column-rule:1px solid var(--line);margin-top:22px;font-size:14px;color:var(--ink2)}
+.l5 .cols p{margin-bottom:14px;break-inside:avoid}
+.l5 .pull{border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);
+  padding:14px 4px;margin:8px 0 16px;font-size:16.5px;font-weight:700;line-height:1.7;break-inside:avoid}
+.l5 .kiji-h{font-weight:900;font-size:16px;margin-bottom:6px;border-left:5px solid var(--accent);padding-left:9px;break-inside:avoid}
+.l5 .waku{border:2px solid var(--ink);padding:16px;margin-top:26px;background:#fff}
+
+@media(max-width:820px){
+  .grid3,.grid2,.l2-hero,.zig,.l4-main{grid-template-columns:1fr}
+  .l4-top{grid-template-columns:1fr 1fr}
+  .zig.rev .vis{order:0}
+  .l5 .cols{column-count:1}
+  section{padding:52px 0}
+}
+</style>
+</head>
+<body>
+
+<!-- =============== L1 王道縦積み（現行の骨格） =============== -->
+<div class="layout on" id="l-1">
+  <section class="l1-hero"><div class="wrap">
+    <span class="eyebrow">港区 民泊規制パブコメへの対案</span>
+    <h1>近所の苦情をその場で受けて、<em>近所に住む人が現場に行って</em>、記録が施設ごとに残る仕組み</h1>
+    <p class="lead">規制を全施設に広げる代わりに、苦情の出ている施設だけを数字で特定する。ページ内のデモで実際に動かせる。</p>
+    <div class="l1-cta"><a class="btn" href="#">プロトタイプを動かす</a><a class="btn ghost" href="#">提出用の対案文</a></div>
+    <div class="stats" style="margin-top:30px"><div><b>24時間</b>受付</div><div><b>15分</b>深夜騒音の到着目標</div><div><b>800円</b>対応した住民に1件</div><div><b>全件</b>施設単位で記録</div></div>
+  </div></section>
+  <section style="background:var(--bg2)"><div class="wrap">
+    <span class="eyebrow">現状の問題</span>
+    <h2 style="font-size:26px;font-weight:900;margin:14px 0 20px">いまのパブコメの問題点</h2>
+    <div class="grid3">
+      <div class="card"><span class="n">1</span><h3 style="font-size:16px">設問が答えを決めている</h3><p class="small">賛否で聞けば当事者でない住民は賛成に回りやすい。</p></div>
+      <div class="card"><span class="n">2</span><h3 style="font-size:16px">運営者が議論の場にいない</h3><p class="small">現場で何が効くかの情報が行政に入らない。</p></div>
+      <div class="card"><span class="n">3</span><h3 style="font-size:16px">一律規制は的外れ</h3><p class="small">苦情ゼロの施設に負担、無許可施設には届かない。</p></div>
+    </div>
+  </div></section>
+  <section><div class="wrap">
+    <span class="eyebrow">仕組み</span>
+    <h2 style="font-size:26px;font-weight:900;margin:14px 0 20px">仕組みは3ステップ</h2>
+    <div class="grid3">
+      <div class="card"><span class="n">1</span><h3 style="font-size:16px">QRから24時間受付</h3><p class="small">文面から種類と緊急度を自動分類。</p></div>
+      <div class="card"><span class="n">2</span><h3 style="font-size:16px">近所の住民が現場へ</h3><p class="small">半径300mの登録住民に通知。1件800円。</p></div>
+      <div class="card"><span class="n">3</span><h3 style="font-size:16px">施設ごとの台帳</h3><p class="small">閾値を超えた施設だけ指導対象に。</p></div>
+    </div>
+    <p class="small" style="margin-top:22px">↓ この下に動くデモ（3画面）・比較シミュレータ・対案文が縦に続く（現行と同じ流れ）</p>
+  </div></section>
+</div>
+
+<!-- =============== L2 プロダクト型（デモが主役・左右交互） =============== -->
+<div class="layout" id="l-2">
+  <section style="padding-bottom:30px"><div class="wrap l2-hero">
+    <div>
+      <span class="eyebrow">港区 民泊規制パブコメへの対案</span>
+      <h1>苦情の受付から解決まで、<em>このページの中で動かせます</em></h1>
+      <p class="small" style="margin-top:14px">近所の苦情を24時間受けて、近くに住む対応員が現場に行き、記録が施設ごとに残る。右のデモがそのまま本体。</p>
+      <div style="display:flex;gap:12px;margin-top:22px"><a class="btn" href="#">デモを触る</a><a class="btn ghost" href="#">対案文を見る</a></div>
+    </div>
+    <div class="phone"><div class="scr">
+      <div class="bar"><span>近所ホットライン</span><span>23:14</span></div>
+      <div class="bd">
+        <label>場所</label><div class="fld">港区◯◯ 3丁目 / 施設A</div>
+        <label>何が起きているか</label><div class="fld">ベランダで大声と音楽が1時間続いている</div>
+        <div class="send">送信する</div>
+        <div class="rep">受付 MT-413｜騒音・最優先<br>到着目標15分。対応員へ通知しました。</div>
+      </div>
+    </div></div>
+  </div></section>
+  <section style="background:var(--bg2)"><div class="wrap">
+    <div class="zig">
+      <div><span class="n">2</span><h3 style="font-size:18px;font-weight:900">通知を受けた近所の住民が現場へ</h3><p class="small" style="margin-top:8px">半径300mの登録住民に通知。受けるかは毎回自由。対応1件800円、深夜は1200円が支払われる。</p></div>
+      <div class="vis"><div class="miniled">
+        <div class="row"><b>MT-413 騒音・最優先</b><span class="badge b-md">経過 0:16</span></div>
+        <div class="row"><span>ベランダで大声と音楽…</span><span>報酬1,200円</span></div>
+        <div class="row"><span class="badge b-ok">受ける</span><span class="badge b-ng">見送る</span></div>
+      </div></div>
+    </div>
+    <div class="zig rev">
+      <div><span class="n">3</span><h3 style="font-size:18px;font-weight:900">対応の記録が施設ごとの台帳になる</h3><p class="small" style="margin-top:8px">件数・対応時間・再発率が数字になり、閾値を超えた施設だけが指導対象になる。苦情ゼロの施設には何も起きない。</p></div>
+      <div class="vis"><div class="miniled">
+        <div class="row"><b>施設F（届出情報なし）</b><span class="badge b-ng">改善指導の対象</span></div>
+        <div class="row"><span>苦情7件・再発4回</span><span>平均64分</span></div>
+        <div class="row"><b>施設C</b><span class="badge b-ok">苦情なし</span></div>
+      </div></div>
+    </div>
+  </div></section>
+  <section><div class="wrap" style="text-align:center">
+    <h2 style="font-size:22px;font-weight:900">パブコメには「反対」ではなく、この対案を出す</h2>
+    <p class="small" style="margin-top:8px">コピーしてそのまま提出できる文面つき</p>
+    <a class="btn" style="margin-top:18px" href="#">対案文を見る</a>
+  </div></section>
+</div>
+
+<!-- =============== L3 ストーリー型（会話で追体験） =============== -->
+<div class="layout" id="l-3">
+  <section style="padding-bottom:24px"><div class="wrap" style="text-align:center">
+    <span class="eyebrow">ある日のグループチャットから</span>
+    <h1 style="font-size:clamp(22px,3vw,30px);font-weight:900;margin-top:16px">この仕組みは、1つの会話から生まれました</h1>
+  </div></section>
+  <section style="padding-top:0"><div class="wrap">
+    <div class="chat">
+      <div class="msg"><div class="av">運営</div><div class="bub">港区が民泊の規制強化についてパブコメを募集してる。設問が賛否形式だから、規制強化ありきになりそう。</div></div>
+      <div class="msg k"><div class="av">仲間</div><div class="bub">この聞き方だと、関係ない住民はネガティブ回答しちゃう。なんで規制を強める方向にしか動けないんだろう。</div></div>
+      <div class="msg"><div class="av">運営</div><div class="bub">実際に運営してる事業者が話し合いの輪にいないから。クレームは纏めて具体的に動いた方が早い。現地にお金が落ちて、住民に仕事が回るといい。</div></div>
+      <div class="divider">── それを形にしたのが、これ ──</div>
+      <div class="msg me"><div class="av">答え</div><div class="bub"><b>近所ホットライン。</b>苦情を24時間受けて、近くの住民が現場に行って、記録が施設ごとに残る。規制の代わりに、問題のある施設だけを数字で特定する仕組み。</div></div>
+    </div>
+    <div style="text-align:center;margin-top:34px">
+      <div class="phone"><div class="scr">
+        <div class="bar"><span>近所ホットライン</span><span>23:14</span></div>
+        <div class="bd">
+          <label>何が起きているか</label><div class="fld">ベランダで大声と音楽が続いている</div>
+          <div class="send">送信する</div>
+          <div class="rep">騒音・最優先で受付。対応員が15分以内に向かいます。</div>
+        </div>
+      </div></div>
+      <div style="display:flex;gap:12px;justify-content:center;margin-top:24px"><a class="btn" href="#">続きを動かしてみる</a><a class="btn ghost" href="#">対案文を見る</a></div>
+    </div>
+  </div></section>
+  <section style="background:var(--bg2)"><div class="wrap">
+    <div class="grid3">
+      <div class="card"><span class="n">1</span><h3 style="font-size:15.5px">受ける</h3><p class="small">QRから24時間。自動分類で優先度を判定。</p></div>
+      <div class="card"><span class="n">2</span><h3 style="font-size:15.5px">動く</h3><p class="small">近所の対応員が現場へ。1件800円。</p></div>
+      <div class="card"><span class="n">3</span><h3 style="font-size:15.5px">残る</h3><p class="small">施設別台帳。閾値超えだけ指導対象。</p></div>
+    </div>
+  </div></section>
+</div>
+
+<!-- =============== L4 データ型（台帳が最初） =============== -->
+<div class="layout" id="l-4">
+  <section><div class="wrap">
+    <span class="eyebrow">港区 民泊苦情台帳（デモ）</span>
+    <h1 style="font-size:clamp(22px,3vw,30px);font-weight:900;margin-top:14px">規制の議論より先に、記録を見せます</h1>
+    <div class="l4-top">
+      <div class="card"><span>登録施設</span><b>142</b></div>
+      <div class="card"><span>苦情 90日</span><b>20件</b></div>
+      <div class="card"><span>平均対応</span><b>34分</b></div>
+      <div class="card"><span>指導対象</span><b style="color:var(--red)">3施設</b></div>
+    </div>
+    <div class="l4-main">
+      <div style="overflow-x:auto"><table>
+        <tr><th>施設</th><th>許可</th><th>苦情</th><th>再発</th><th>判定</th></tr>
+        <tr><td>施設A</td><td>許可あり</td><td>2件</td><td>0回</td><td><span class="badge b-md">経過観察</span></td></tr>
+        <tr><td>施設C</td><td>許可あり</td><td>0件</td><td>0回</td><td><span class="badge b-ok">苦情なし</span></td></tr>
+        <tr class="bad"><td>施設F</td><td style="color:var(--red);font-weight:700">届出なし</td><td>7件</td><td>4回</td><td><span class="badge b-ng">改善指導の対象</span></td></tr>
+        <tr><td>施設B</td><td>許可あり</td><td>1件</td><td>0回</td><td><span class="badge b-md">経過観察</span></td></tr>
+      </table></div>
+      <div class="card">
+        <h3 style="font-size:16px;font-weight:900">この数字はどう集まるか</h3>
+        <p class="small" style="margin-top:10px">① 近隣住民がQRから苦情を送る（24時間）<br>② 近くの対応員が現場に行く（1件800円）<br>③ 受付から完了までが施設単位で記録される</p>
+        <p class="small" style="margin-top:10px">閾値（90日で3件以上かつ再発2回以上）を超えた施設だけが指導対象。苦情ゼロの施設には何も起きない。</p>
+        <a class="btn" style="margin-top:14px" href="#">苦情を1件流してみる</a>
+      </div>
+    </div>
+  </div></section>
+  <section style="background:var(--bg2)"><div class="wrap">
+    <h2 style="font-size:20px;font-weight:900">一律規制との違い</h2>
+    <div class="grid2" style="margin-top:16px;align-items:start">
+      <div class="card"><h3 style="font-size:15px;color:var(--red)">一律の規制強化</h3><p class="small" style="margin-top:8px">142施設全部に義務と費用。うち131施設は苦情ゼロ。無許可の35施設には届かない。</p></div>
+      <div class="card" style="outline:3px solid var(--accent)"><h3 style="font-size:15px;color:var(--green)">記録にもとづく運用</h3><p class="small" style="margin-top:8px">費用は苦情のある11施設だけ。無許可も通報位置から特定。対応報酬が住民に落ちる。</p></div>
+    </div>
+    <div style="text-align:center;margin-top:24px"><a class="btn" href="#">パブコメ提出用の対案文</a></div>
+  </div></section>
+</div>
+
+<!-- =============== L5 紙面型（新聞レイアウト） =============== -->
+<div class="layout l5" id="l-5">
+  <section style="padding-top:20px"><div class="wrap">
+    <div class="masthead"><h1>近所ホットライン 号外</h1><span class="date">2026年8月21日｜港区 民泊規制パブコメへの対案</span></div>
+    <div class="headline">苦情は、規制ではなく「近所の15分」で解決できる</div>
+    <div class="cols">
+      <p class="kiji-h">■ 何が起きているか</p>
+      <p>港区が民泊・旅館業の規制強化についてパブリックコメントを募集している。設問は賛否形式で、当事者でない住民ほど賛成に回りやすい。実際に運営する事業者は検討の輪の外にいる。</p>
+      <p class="kiji-h">■ 設問が挙げる実害の正体</p>
+      <p>区の設問が挙げる問題の中心は「無人施設で事業者へ連絡が取れない」こと。必要なのは一律の規制ではなく、連絡がつき、駆けつけがある仕組みである。</p>
+      <div class="pull">苦情を24時間受けて、近所に住む対応員が現場に行き、記録が施設ごとに残る。閾値を超えた施設だけが指導対象になる。</div>
+      <p class="kiji-h">■ 仕組み</p>
+      <p>①玄関のQRから24時間受付。文面から種類と緊急度を自動分類する。②半径300mの登録住民に通知が届き、最初に受けた人が現場へ向かう。対応1件800円、深夜1200円。③受付から完了までが施設単位の台帳になり、90日で3件以上かつ再発2回以上の施設だけが改善指導の対象になる。</p>
+      <p class="kiji-h">■ 数字で比べる</p>
+      <p>一律規制は142施設全部に義務と費用がかかり、うち131施設は苦情ゼロ。無許可の35施設には届かない。記録運用なら費用は苦情のある11施設だけで、対応報酬は年5万円超が近隣住民に落ちる。</p>
+    </div>
+    <div class="waku">
+      <b style="font-size:15px">📄 パブコメ提出用の対案文を用意しました</b>
+      <p class="small" style="margin-top:6px">「規制強化に反対」ではなく、代わりに何をするかまで書いた文面。コピーして自分の言葉に直して提出できます。</p>
+      <div style="display:flex;gap:12px;margin-top:14px"><a class="btn" href="#">対案文を見る</a><a class="btn ghost" href="#">デモを動かす</a></div>
+    </div>
+  </div></section>
+</div>
+
+<div id="layout-bar"></div>
+<script>
+const bar=document.getElementById('layout-bar');
+[['1','① 王道縦積み'],['2','② デモが主役'],['3','③ 会話ストーリー'],['4','④ 台帳ファースト'],['5','⑤ 新聞紙面']].forEach(([k,label],i)=>{
+  const b=document.createElement('button'); b.textContent=label;
+  b.onclick=()=>{document.querySelectorAll('.layout').forEach(x=>x.classList.remove('on'));
+    document.getElementById('l-'+k).classList.add('on');
+    [...bar.children].forEach(x=>x.classList.remove('on')); b.classList.add('on');
+    window.scrollTo(0,0);};
+  bar.appendChild(b); if(i===0)b.classList.add('on');
+});
+</script>
+<script src="devbar.js"></script>
+</body>
+</html>
