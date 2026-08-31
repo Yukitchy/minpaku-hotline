@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>民泊コントローラー（プロトタイプ）</title>
+<style>
+  :root{--red:#d33;--ink:#1a1a1a;--sub:#666;--bg:#f4f6f8;--card:#fff;--line:#e2e6ea;--green:#2a9d5c;--amber:#e8a20c;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:"Hiragino Sans","Noto Sans JP",sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;}
+  .wrap{max-width:680px;margin:0 auto;padding:24px 16px 60px;}
+  .demo{background:#fff3cd;border:1px solid #e8d48a;color:#7a6210;font-size:12px;font-weight:700;text-align:center;padding:6px;border-radius:8px;margin-bottom:16px;}
+  header h1{font-size:20px;display:flex;align-items:center;gap:8px;}
+  header p{color:var(--sub);font-size:13px;margin-bottom:18px;}
+  .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;text-align:center;}
+  .kpi .v{font-size:22px;font-weight:800;}
+  .kpi .l{font-size:11px;color:var(--sub);}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:14px;}
+  .card h2{font-size:14px;margin-bottom:10px;color:var(--sub);letter-spacing:.05em;}
+  .row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-top:1px solid var(--line);font-size:14px;}
+  .row:first-of-type{border-top:none;}
+  .tag{font-size:11px;font-weight:700;padding:2px 10px;border-radius:99px;flex:none;}
+  .t-in{background:#e6f6ec;color:var(--green);}
+  .t-out{background:#fdeaea;color:var(--red);}
+  .t-wait{background:#fdf3d9;color:var(--amber);}
+  .t-ok{background:#eef1f4;color:var(--sub);}
+  .who{font-weight:700;}
+  .sub{color:var(--sub);font-size:12px;}
+  .aline{background:#f0f7ff;border:1px solid #cfe3f8;border-radius:10px;padding:12px;font-size:13px;margin-top:10px;}
+  .aline b{color:#1a5fa8;}
+  footer{text-align:center;color:var(--sub);font-size:12px;margin-top:24px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="demo">⚠️ プロトタイプ画面です。表示はすべてデモ用の架空データ（実予約ではありません）</div>
+  <header>
+    <h1>🛎 民泊コントローラー</h1>
+    <p>今日の宿の状態が1画面で全部わかる管制盤 — 2026年9月1日（月）</p>
+  </header>
+
+  <div class="kpis">
+    <div class="kpi"><div class="v">83%</div><div class="l">今月の稼働率</div></div>
+    <div class="kpi"><div class="v">2件</div><div class="l">今日の到着</div></div>
+    <div class="kpi"><div class="v">1件</div><div class="l">要返信メッセージ</div></div>
+  </div>
+
+  <div class="card">
+    <h2>今日の動き</h2>
+    <div class="row"><span><span class="who">Sample Family（4名・豪）</span><br><span class="sub">Booking.com ／ 3泊 ／ 到着予定 15:30</span></span><span class="tag t-in">IN 今日</span></div>
+    <div class="row"><span><span class="who">Demo Guest（2名・米）</span><br><span class="sub">Airbnb ／ 2泊 ／ 「21時頃着きます」と連絡あり</span></span><span class="tag t-in">IN 今日</span></div>
+    <div class="row"><span><span class="who">Test Couple（2名・仏）</span><br><span class="sub">チェックアウト 10:00 ／ 清掃 11:00 手配済み</span></span><span class="tag t-out">OUT 今日</span></div>
+  </div>
+
+  <div class="card">
+    <h2>要対応（AIが下書きまで用意）</h2>
+    <div class="row"><span><span class="who">「駅からの行き方を教えて」</span><br><span class="sub">Demo Guest ／ 2時間前</span></span><span class="tag t-wait">返信待ち</span></div>
+    <div class="aline">🤖 <b>AIの返信案:</b> 「上野駅から都バスで『清川一丁目』下車すぐです。バス案内図を添付しますね」— 承認だけで送信できます（この画面はデモなので送信されません）</div>
+  </div>
+
+  <div class="card">
+    <h2>見張り番</h2>
+    <div class="row"><span>新着レビュー（Booking.com）</span><span class="tag t-ok">新着なし</span></div>
+    <div class="row"><span>今夜の料金の妥当性（近隣相場比）</span><span class="tag t-ok">適正</span></div>
+    <div class="row"><span>台東区の条例改正ウォッチ</span><span class="tag t-wait">2026-10-01 改正予定あり</span></div>
+  </div>
+
+  <footer>プロトタイプ v0.1 ／ 本物はAIが予約サイト・メッセージ・清掃・条例を横断監視する構想です</footer>
+</div>
+</body>
+</html>
