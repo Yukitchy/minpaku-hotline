@@ -6,100 +6,138 @@
 <meta name="robots" content="noindex">
 <title>みんぱくコントローラー（AirHost型模倣スタディ）</title>
 <style>
-  :root{--blue:#2563eb;--ink:#1e2530;--sub:#68737f;--bg:#f2f4f7;--card:#fff;--line:#e3e7ec;--green:#16a34a;--amber:#d97706;--red:#dc2626;}
+  :root{--green:#2fa47a;--blue:#2563eb;--ink:#2b3440;--sub:#8a94a0;--bg:#eef0f3;--card:#fff;--line:#e4e7eb;--red:#e05252;--gray:#9aa3ad;--today:#f7ede2;}
   *{margin:0;padding:0;box-sizing:border-box;}
-  body{font-family:"Hiragino Sans","Noto Sans JP",sans-serif;background:var(--bg);color:var(--ink);font-size:14px;line-height:1.6;}
+  body{font-family:"Hiragino Sans","Noto Sans JP",sans-serif;background:var(--bg);color:var(--ink);font-size:13px;line-height:1.6;}
   .demo{background:#fff3cd;border-bottom:1px solid #e8d48a;color:#7a6210;font-size:12px;font-weight:700;text-align:center;padding:6px;}
-  .app{display:flex;min-height:100vh;}
-  aside{width:200px;background:#101828;color:#cbd3dd;padding:18px 0;flex:none;}
-  aside .logo{font-weight:800;color:#fff;padding:0 18px 16px;font-size:15px;}
-  aside .logo span{color:#7ab5ff;}
-  aside a{display:block;padding:10px 18px;color:#cbd3dd;text-decoration:none;font-size:13px;cursor:pointer;}
-  aside a.on{background:var(--blue);color:#fff;border-radius:0 99px 99px 0;}
-  main{flex:1;padding:20px;min-width:0;}
-  h1{font-size:18px;margin-bottom:4px;}
-  .crumb{color:var(--sub);font-size:12px;margin-bottom:16px;}
-  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px;}
-  .kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px;}
-  .kpi .v{font-size:20px;font-weight:800;}
-  .kpi .l{font-size:11px;color:var(--sub);}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px;margin-bottom:14px;overflow-x:auto;}
-  .card h2{font-size:13px;color:var(--sub);margin-bottom:10px;letter-spacing:.05em;}
-  table{border-collapse:collapse;width:100%;min-width:560px;font-size:12px;}
-  th,td{border:1px solid var(--line);padding:6px 8px;text-align:center;white-space:nowrap;}
-  th{background:#f8fafc;color:var(--sub);font-weight:600;}
-  td.room{text-align:left;font-weight:700;background:#f8fafc;}
-  .bar{border-radius:6px;color:#fff;font-size:11px;padding:2px 6px;display:block;}
-  .b1{background:#3b82f6;} .b2{background:#8b5cf6;} .b3{background:#f59e0b;}
-  .stop{background:#fee2e2;color:var(--red);font-size:11px;border-radius:6px;padding:2px 6px;display:block;}
-  .row{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;padding:10px 0;border-top:1px solid var(--line);}
-  .row:first-of-type{border-top:none;}
-  .tag{font-size:11px;font-weight:700;padding:2px 10px;border-radius:99px;flex:none;}
-  .t-ok{background:#dcfce7;color:var(--green);}
-  .t-wait{background:#fef3c7;color:var(--amber);}
-  .t-auto{background:#dbeafe;color:var(--blue);}
-  .ai{background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:10px;font-size:13px;margin-top:8px;}
+  .topbar{background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:14px;padding:10px 16px;}
+  .topbar .logo{font-weight:800;color:var(--blue);font-size:14px;}
+  .topbar h1{font-size:14px;font-weight:700;}
+  .btn-add{margin-left:auto;background:var(--green);color:#fff;border-radius:8px;padding:7px 14px;font-weight:700;font-size:12px;text-decoration:none;}
+  .toolbar{display:flex;align-items:center;gap:8px;padding:10px 16px;flex-wrap:wrap;}
+  .tool{background:#fff;border:1px solid var(--line);border-radius:8px;padding:5px 12px;font-size:12px;color:var(--ink);}
+  .tool.green{background:#e8f5ef;border-color:#bfe3d4;color:var(--green);font-weight:700;}
+  .legend{display:flex;gap:10px;flex-wrap:wrap;padding:0 16px 8px;font-size:11px;color:var(--sub);}
+  .legend span::before{content:"●";margin-right:4px;}
+  .l-in::before{color:var(--green);} .l-out::before{color:var(--red);} .l-stay::before{color:var(--gray);} .l-block::before{color:#c7ad7a;} .l-close::before{color:#5b6470;}
+  .board{display:flex;gap:14px;padding:0 16px 20px;align-items:flex-start;}
+  .cal{flex:1;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow-x:auto;min-width:0;}
+  table{border-collapse:collapse;width:100%;min-width:640px;font-size:12px;}
+  th,td{border:1px solid var(--line);padding:5px 6px;text-align:center;white-space:nowrap;height:34px;}
+  th{background:#fafbfc;color:var(--sub);font-weight:600;font-size:11px;}
+  th.today,td.today{background:var(--today);}
+  th.we,td.we{background:#f5f6f8;}
+  td.prop{background:#f3f5f7;text-align:left;font-weight:700;font-size:12px;}
+  td.room{text-align:left;color:var(--ink);background:#fbfcfd;padding-left:18px;}
+  .bar{border-radius:4px;color:#fff;font-size:11px;padding:2px 8px;display:block;text-align:left;overflow:hidden;}
+  .bar .lk{float:right;opacity:.8;}
+  .b-red{background:var(--red);} .b-gray{background:var(--gray);} .b-green{background:var(--green);} .b-block{background:#efe6d4;color:#8a6d1a;}
+  .side{width:250px;flex:none;}
+  .gcard{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:0 4px 14px rgba(20,30,40,.08);}
+  .gcard .ph{background:linear-gradient(120deg,#3a4656,#5b6b7d);color:#fff;padding:14px;font-size:12px;}
+  .gcard .ph b{font-size:13px;display:block;}
+  .gcard .bd{padding:12px 14px;font-size:12px;}
+  .gcard .code{color:var(--sub);}
+  .gcard .dates{background:#fdf1f1;color:var(--red);border-radius:6px;padding:4px 8px;margin:8px 0;font-size:11px;}
+  .gbtns{display:flex;gap:8px;margin-top:8px;}
+  .gbtn{flex:1;text-align:center;border:1px solid var(--blue);color:var(--blue);border-radius:8px;padding:6px 0;font-size:12px;font-weight:700;}
+  .gbtn.fill{background:var(--blue);color:#fff;}
+  .ai{background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:10px 12px;font-size:12px;margin-top:12px;}
   .ai b{color:var(--blue);}
-  .ota{display:inline-block;border:1px solid var(--line);border-radius:6px;padding:2px 8px;font-size:11px;margin:2px;color:var(--sub);}
-  footer{color:var(--sub);font-size:11px;padding:10px 0 30px;text-align:center;}
-  @media(max-width:640px){aside{display:none;}.kpis{grid-template-columns:repeat(2,1fr);}}
+  .below{padding:0 16px 40px;display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;}
+  .panel h2{font-size:12px;color:var(--sub);margin-bottom:8px;letter-spacing:.05em;}
+  .row{display:flex;justify-content:space-between;gap:8px;padding:8px 0;border-top:1px solid var(--line);font-size:12px;align-items:flex-start;}
+  .row:first-of-type{border-top:none;}
+  .tag{font-size:10px;font-weight:700;padding:2px 8px;border-radius:99px;flex:none;}
+  .t-ok{background:#e8f5ef;color:var(--green);} .t-wait{background:#fef3c7;color:#b45309;} .t-auto{background:#dbeafe;color:var(--blue);}
+  footer{color:var(--sub);font-size:11px;padding:0 16px 30px;text-align:center;}
+  @media(max-width:760px){.board{flex-direction:column;}.side{width:100%;}.below{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
-<div class="demo">⚠️ 模倣スタディ（デモ）— AirHost型PMSの画面構成をAIが公開情報から再現した架空データのプロトタイプです。実サービス・実予約ではありません</div>
-<div class="app">
-  <aside>
-    <div class="logo">🛎 みんぱく<span>コントローラー</span></div>
-    <a class="on">📊 ダッシュボード</a>
-    <a>📅 カレンダー（在庫・料金）</a>
-    <a>📥 予約管理</a>
-    <a>💬 メッセージ</a>
-    <a>🧹 タスク（清掃）</a>
-    <a>🏠 施設・ルーム</a>
-    <a>📈 レポート</a>
-    <a>⚙️ 設定・OTA連携</a>
-  </aside>
-  <main>
-    <h1>ダッシュボード</h1>
-    <p class="crumb">LITTLE BIRD（デモ施設） ／ 2026年9月1日（月）</p>
+<div class="demo">⚠️ 模倣スタディ（デモ）— AirHostの予約カレンダー画面をAIが公開情報から再現した架空データのプロトタイプです。実サービス・実予約ではありません</div>
 
-    <div class="kpis">
-      <div class="kpi"><div class="v">83%</div><div class="l">今月の稼働率</div></div>
-      <div class="kpi"><div class="v">¥18,400</div><div class="l">今夜のADR（平均客室単価）</div></div>
-      <div class="kpi"><div class="v">2 / 1</div><div class="l">本日IN / OUT</div></div>
-      <div class="kpi"><div class="v">1件</div><div class="l">要返信</div></div>
-    </div>
-
-    <div class="card">
-      <h2>📅 カレンダー — 部屋 × 日付（サイトコントローラーの心臓部）</h2>
-      <table>
-        <tr><th>ルーム</th><th>9/1(月)</th><th>9/2(火)</th><th>9/3(水)</th><th>9/4(木)</th><th>9/5(金)</th><th>9/6(土)</th></tr>
-        <tr><td class="room">101 和室4名</td><td colspan="3"><span class="bar b1">Sample Family（Booking.com）</span></td><td>¥16,000</td><td>¥19,000</td><td>¥24,000</td></tr>
-        <tr><td class="room">102 洋室2名</td><td colspan="2"><span class="bar b2">Demo Guest（Airbnb）</span></td><td>¥12,000</td><td>¥12,000</td><td colspan="2"><span class="bar b3">Test Couple（じゃらん）</span></td></tr>
-        <tr><td class="room">201 洋室3名</td><td>¥14,000</td><td>¥14,000</td><td><span class="stop">販売停止（修繕）</span></td><td>¥14,000</td><td>¥17,000</td><td>¥21,000</td></tr>
-      </table>
-      <p style="font-size:12px;color:var(--sub);margin-top:8px;">ここで料金や在庫を変えると、連携中の全OTAに一括反映される——のが既存サイトコントローラーの基本価値。
-      <span class="ota">Airbnb</span><span class="ota">Booking.com</span><span class="ota">楽天トラベル</span><span class="ota">じゃらん</span><span class="ota">Agoda</span><span class="ota">Expedia</span></p>
-      <div class="ai">🤖 <b>AIならここが変わる（この企画の本題）:</b> 「3連休の土曜、近隣相場より¥4,000安いです。¥24,000に上げますか？」を毎朝AIが提案 → 承認1タップで全OTA反映。既存ツールは「手を動かす場所」をくれるだけで、「いくらにすべきか」は教えてくれない。</div>
-    </div>
-
-    <div class="card">
-      <h2>💬 メッセージ — 自動化キュー</h2>
-      <div class="row"><span><b>「駅からの行き方を教えて」</b><br><span style="color:var(--sub);font-size:12px;">Demo Guest（Airbnb）／ 2時間前</span></span><span class="tag t-wait">要返信</span></div>
-      <div class="ai">🤖 <b>AI返信案:</b> 「上野駅から都バスで『清川一丁目』下車すぐです。バス案内図を添付しますね」→ 承認だけで送信（デモなので送信されません）</div>
-      <div class="row"><span>チェックイン案内（Sample Family宛・15:30到着）</span><span class="tag t-auto">自動送信予約済み</span></div>
-      <div class="row"><span>サンクスメール（Test Couple宛・OUT翌朝）</span><span class="tag t-auto">自動送信予約済み</span></div>
-    </div>
-
-    <div class="card">
-      <h2>🧹 タスク ＆ 見張り番</h2>
-      <div class="row"><span>102 清掃（OUT 10:00 → IN 15:00）</span><span class="tag t-ok">清掃者に自動割当済み</span></div>
-      <div class="row"><span>新着レビュー（Booking.com）</span><span class="tag t-ok">新着なし</span></div>
-      <div class="row"><span>台東区の条例改正ウォッチ</span><span class="tag t-wait">2026-10-01 改正予定あり</span></div>
-    </div>
-
-    <footer>模倣スタディ v0.2 ／ 画面構成の参考: AirHost型PMS（PMS＋サイトコントローラー＋自動メッセージ＋タスク）の公開情報 ／ 収録ヒアリングを学習して次版で「AIが判断まで代行する管制盤」に育てます</footer>
-  </main>
+<div class="topbar">
+  <span class="logo">🛎 みんぱくコントローラー</span>
+  <h1>☰ 予約カレンダー</h1>
+  <a class="btn-add" href="#">＋ 予約を追加</a>
 </div>
+
+<div class="toolbar">
+  <span class="tool">🔽 フィルター</span>
+  <span class="tool">↕ ソート</span>
+  <span class="tool green">バッチアベイラビリティ</span>
+  <span class="tool green">未割当の予約 2</span>
+</div>
+
+<div class="legend">
+  <span class="l-in">チェックイン</span><span class="l-out">チェックアウト</span><span class="l-stay">滞在中</span><span class="l-block">ブロックされた</span><span class="l-close">クローズド</span>
+</div>
+
+<div class="board">
+  <div class="cal">
+    <table>
+      <tr>
+        <th style="text-align:left;">物件 / ルーム</th>
+        <th class="we">8/29 土</th><th class="we">8/30 日</th><th>8/31 月</th><th class="today">9/1 今日</th><th>9/2 火</th><th>9/3 水</th><th>9/4 木</th><th class="we">9/5 土</th>
+      </tr>
+      <tr><td class="prop" colspan="9">▾ 物件1（LITTLE BIRDデモ館）</td></tr>
+      <tr>
+        <td class="room">101 和室4名</td>
+        <td class="we"></td><td class="we"></td><td></td>
+        <td class="today" colspan="3"><span class="bar b-green">Sample Family <span class="lk">🔒</span></span></td>
+        <td></td><td class="we"></td>
+      </tr>
+      <tr>
+        <td class="room">102 洋室2名</td>
+        <td class="we" colspan="2"><span class="bar b-gray">Booked</span></td>
+        <td></td>
+        <td class="today" colspan="2"><span class="bar b-red">Demo Guest <span class="lk">🔒</span></span></td>
+        <td></td><td></td><td class="we"><span class="bar b-gray">Booked</span></td>
+      </tr>
+      <tr><td class="prop" colspan="9">▾ 物件2（別館デモ）</td></tr>
+      <tr>
+        <td class="room">201 洋室3名</td>
+        <td class="we"></td><td class="we"></td><td></td>
+        <td class="today"></td>
+        <td colspan="2"><span class="bar b-block">ブロック（修繕）</span></td>
+        <td></td><td class="we"></td>
+      </tr>
+    </table>
+    <div class="ai" style="margin:12px;">🤖 <b>AIならここが変わる（この企画の本題）:</b> 「9/5(土)は近隣相場より¥4,000安いです。¥24,000に上げますか？」を毎朝AIが提案 → 承認1タップで全OTAに一括反映。既存ツールは「手を動かす場所」をくれるだけで、いくらにすべきかは教えてくれない。</div>
+  </div>
+
+  <div class="side">
+    <div class="gcard">
+      <div class="ph"><b>LITTLE BIRDデモ館</b>101 和室4名</div>
+      <div class="bd">
+        <b>Sample Family</b> <span class="code">#3299877</span><br>
+        <span class="code">Booking.com ／ 4名（豪）</span>
+        <div class="dates">9/1 15:30 IN → 9/4 10:00 OUT</div>
+        <div class="gbtns"><span class="gbtn fill">チェックイン</span><span class="gbtn">チェックアウト</span></div>
+      </div>
+    </div>
+    <div class="ai">🤖 <b>AIメモ:</b> このゲストは4名家族・初来日。事前メッセージに「バス案内図」を自動添付済み。</div>
+  </div>
+</div>
+
+<div class="below">
+  <div class="panel">
+    <h2>💬 メッセージ — 自動化キュー</h2>
+    <div class="row"><span><b>「駅からの行き方を教えて」</b><br><span style="color:var(--sub);">Demo Guest（Airbnb）／ 2時間前</span></span><span class="tag t-wait">要返信</span></div>
+    <div class="ai">🤖 <b>AI返信案:</b> 「上野駅から都バスで『清川一丁目』下車すぐです。バス案内図を添付しますね」→ 承認だけで送信（デモなので送信されません）</div>
+    <div class="row"><span>チェックイン案内（Sample Family宛）</span><span class="tag t-auto">自動送信予約済み</span></div>
+    <div class="row"><span>サンクスメール（OUT翌朝）</span><span class="tag t-auto">自動送信予約済み</span></div>
+  </div>
+  <div class="panel">
+    <h2>🧹 タスク ＆ 見張り番</h2>
+    <div class="row"><span>102 清掃（OUT 10:00 → IN 15:00）</span><span class="tag t-ok">清掃者に自動割当済み</span></div>
+    <div class="row"><span>新着レビュー（Booking.com）</span><span class="tag t-ok">新着なし</span></div>
+    <div class="row"><span>台東区の条例改正ウォッチ</span><span class="tag t-wait">2026-10-01 改正予定あり</span></div>
+  </div>
+</div>
+
+<footer>模倣スタディ v0.3 ／ ベンチマーク: AirHost 予約カレンダー（公開スクリーンショット準拠: 緑のアクションボタン・ステータス凡例・物件グルーピング・今日列ハイライト・週末シェード・未割当予約バッジ・ゲスト詳細カード） ／ 収録ヒアリングを学習して次版で「AIが判断まで代行する管制盤」に育てます</footer>
 </body>
 </html>
